@@ -1,0 +1,7 @@
+.form-content {
+  margin-top: $form-section-spacing;
+
+  @media (max-width: $screen-xs-max) {
+    margin-top: $mobile-form-section-spacing;
+  }
+}

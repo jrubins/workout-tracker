@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`api utils getApiSaveData returns the changed data fields 1`] = `
+Object {
+  "different": "newData",
+  "id": 5,
+}
+`;
+
+exports[`api utils queryStringify transforms a provided object into a query string 1`] = `"foo=bar"`;
+
+exports[`api utils queryStringify transforms a provided object into a query string 2`] = `"foo=bar&fox=true&objQueryParam[gt]=5&numQueryParam=15"`;
+
+exports[`api utils transformFieldsForAPI allows empty fields to be provided 1`] = `
+Object {
+  "appId1": "foo",
+  "appId2": null,
+  "appId3": 25,
+  "appId4": Array [
+    72,
+    "string",
+  ],
+  "appId5": Array [],
+  "appId6": false,
+  "appId7": "",
+  "appId8": Object {},
+  "appId9": Object {
+    "foo": "bar",
+  },
+}
+`;
+
+exports[`api utils transformFieldsForAPI transforms all fields without empty fields 1`] = `
+Object {
+  "appId1": "foo",
+  "appId3": 25,
+  "appId4": Array [
+    72,
+    "string",
+  ],
+  "appId6": false,
+  "appId8": Object {},
+  "appId9": Object {
+    "foo": "bar",
+  },
+}
+`;

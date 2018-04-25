@@ -1,0 +1,31 @@
+{
+  "env": {
+    "test": {
+      "presets": [
+        "react",
+        ["env", {
+          "targets": {
+            "node": true
+          }
+        }]
+      ],
+    },
+  },
+  "plugins": [
+    "lodash",
+    "syntax-dynamic-import",
+    "transform-es2015-destructuring",
+    "transform-object-rest-spread",
+    "react-hot-loader/babel"
+  ],
+  "presets": [
+    "react",
+    ["env", {
+      "modules": false,
+      "targets": {
+        "browsers": ["last 2 versions"]
+      },
+      "useBuiltIns": "entry"
+    }]
+  ]
+}
