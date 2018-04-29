@@ -4,6 +4,7 @@
 
 [context.production]
   [context.production.environment]
+    API_BASE_URL="https://workouts-tracker.herokuapp.com"
     APP_ENV="production"
     NODE_ENV="production"
     YARN_FLAGS="--production=false"
