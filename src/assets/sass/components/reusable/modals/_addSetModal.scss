@@ -1,0 +1,23 @@
+.add-set-form-weight {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .form-group {
+    width: 48%;
+
+    &:last-child {
+      width: 100%;
+    }
+  }
+}
+
+.add-set-form-distance-time {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .form-group {
+    width: 48%;
+  }
+}

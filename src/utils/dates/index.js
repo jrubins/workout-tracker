@@ -73,6 +73,22 @@ export function getTimestamp(date) {
 }
 
 /**
+ * Returns if the dateToCheck is within the day range for the provided day.
+ *
+ * @param {Date|String|Number} dateToCheck
+ * @param {Date|String|Number} dayForRange
+ * @returns {Boolean}
+ */
+export function isWithinDayRange(dateToCheck, dayForRange) {
+  const dateToCheckTimestamp = getTimestamp(dateToCheck)
+
+  return (
+    dateToCheckTimestamp >= getTimestamp(startOfDay(dayForRange)) &&
+    dateToCheckTimestamp <= getTimestamp(endOfDay(dayForRange))
+  )
+}
+
+/**
  * Returns the start of the passed in date.
  *
  * @param {Date|String|Number} date

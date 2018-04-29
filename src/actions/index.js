@@ -16,3 +16,11 @@ export const OPEN_MODAL = 'OPEN_MODAL'
 
 // User action types.
 export const LOG_OUT = 'LOG_OUT'
+
+// Weight action types.
+export const FETCH_WEIGHT = 'FETCH_WEIGHT'
+export const FETCH_WEIGHT_FAIL = 'FETCH_WEIGHT_FAIL'
+export const FETCH_WEIGHT_SUCCESS = 'FETCH_WEIGHT_SUCCESS'
+export const REQUEST_SAVE_WEIGHT = 'REQUEST_SAVE_WEIGHT'
+export const REQUEST_SAVE_WEIGHT_FAIL = 'REQUEST_SAVE_WEIGHT_FAIL'
+export const REQUEST_SAVE_WEIGHT_SUCCESS = 'REQUEST_SAVE_WEIGHT_SUCCESS'

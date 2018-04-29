@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const ChevronRight = ({ onClick }) => (
+const ChevronRightIcon = ({ onClick }) => (
   <svg
     className="icon icon-chevron-right"
     fill="#000000"
@@ -13,8 +13,8 @@ const ChevronRight = ({ onClick }) => (
   </svg>
 )
 
-ChevronRight.propTypes = {
+ChevronRightIcon.propTypes = {
   onClick: PropTypes.func,
 }
 
-export default ChevronRight
+export default ChevronRightIcon

@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import _ from 'lodash'
 
 import { getExerciseById } from '../../../reducers'
 import { saveExerciseSet } from '../../../actions/exercises'
@@ -42,8 +41,15 @@ const AddSetModal = ({
   exerciseId,
   saveExerciseSet,
 }) => {
-  const noSets = exercise.sets.length === 0
-  const hasDistance = _.findKey(exercise.sets, 'distance')
+  const isDistanceExercise = exercise.type === 'Distance'
+  const isTimeExercise = exercise.type === 'Time'
+  const isWeightExercise = exercise.type === 'Weight'
+  const defaultDistanceUnit =
+    exercise.sets.length > 0 ? exercise.sets[0].distanceUnit : 'mile'
+  const defaultTimeUnit =
+    exercise.sets.length > 0 ? exercise.sets[0].timeUnit : 'min'
+  const defaultWeightUnit =
+    exercise.sets.length > 0 ? exercise.sets[0].weightUnit : 'lb'
 
   return (
     <ApiForm
@@ -54,13 +60,13 @@ const AddSetModal = ({
         if (timeValue) {
           const timeValueArr = timeValue.split('.')
           const sec = timeValueArr[1]
-          const secMin = sec / 60
+          const secMin = sec ? sec / 60 : 0
           timeMin = Number.parseInt(timeValueArr[0], 10) + secMin
         }
 
         saveExerciseSet(exerciseId, {
-          [FORM_STATE_FIELDS.TIME.fieldName]: timeMin,
           ...formData,
+          [FORM_STATE_FIELDS.TIME.fieldName]: timeMin,
         })
       }}
       completedForm={completedForm}
@@ -69,52 +75,53 @@ const AddSetModal = ({
         <Form
           ref={saveFormRef}
           defaults={{
-            [FORM_STATE_FIELDS.DISTANCE_UNIT.fieldName]: hasDistance
-              ? exercise.sets[0].distanceUnit
-              : null,
-            [FORM_STATE_FIELDS.TIME_UNIT.fieldName]: hasDistance
-              ? exercise.sets[0].timeUnit
-              : null,
+            [FORM_STATE_FIELDS.DISTANCE_UNIT.fieldName]: defaultDistanceUnit,
+            [FORM_STATE_FIELDS.TIME_UNIT.fieldName]: defaultTimeUnit,
+            [FORM_STATE_FIELDS.WEIGHT_UNIT.fieldName]: defaultWeightUnit,
           }}
           formFields={FORM_STATE_FIELDS}
         >
           {({ fields, handleChange }) => {
             return (
-              <div>
-                {(hasDistance || noSets) && (
-                  <Fragment>
-                    <FormGroup label="Distance">
-                      <Input
-                        handleChange={value =>
-                          handleChange(
-                            FORM_STATE_FIELDS.DISTANCE.fieldName,
-                            value
-                          )
-                        }
-                        name="distance"
-                        type="number"
-                        value={
-                          fields[FORM_STATE_FIELDS.DISTANCE.fieldName].value
-                        }
-                      />
-                    </FormGroup>
-                    <FormGroup label="Distance Unit">
-                      <Input
-                        handleChange={value =>
-                          handleChange(
-                            FORM_STATE_FIELDS.DISTANCE_UNIT.fieldName,
-                            value
-                          )
-                        }
-                        name="distanceUnit"
-                        type="text"
-                        value={
-                          fields[FORM_STATE_FIELDS.DISTANCE_UNIT.fieldName]
-                            .value
-                        }
-                      />
-                    </FormGroup>
-                    <FormGroup label="Time">
+              <div className="add-set-form">
+                {(isDistanceExercise || isTimeExercise) && (
+                  <div className="add-set-form-distance-time">
+                    {isDistanceExercise && (
+                      <Fragment>
+                        <FormGroup label="Distance">
+                          <Input
+                            handleChange={value =>
+                              handleChange(
+                                FORM_STATE_FIELDS.DISTANCE.fieldName,
+                                value
+                              )
+                            }
+                            name="distance"
+                            type="number"
+                            value={
+                              fields[FORM_STATE_FIELDS.DISTANCE.fieldName].value
+                            }
+                          />
+                        </FormGroup>
+                        <FormGroup label="Distance Unit">
+                          <Input
+                            handleChange={value =>
+                              handleChange(
+                                FORM_STATE_FIELDS.DISTANCE_UNIT.fieldName,
+                                value
+                              )
+                            }
+                            name="distanceUnit"
+                            type="text"
+                            value={
+                              fields[FORM_STATE_FIELDS.DISTANCE_UNIT.fieldName]
+                                .value
+                            }
+                          />
+                        </FormGroup>
+                      </Fragment>
+                    )}
+                    <FormGroup hint="Enter min.seconds" label="Time">
                       <Input
                         handleChange={value =>
                           handleChange(FORM_STATE_FIELDS.TIME.fieldName, value)
@@ -139,21 +146,11 @@ const AddSetModal = ({
                         }
                       />
                     </FormGroup>
-                  </Fragment>
+                  </div>
                 )}
 
-                {(!hasDistance || noSets) && (
-                  <Fragment>
-                    <FormGroup label="Reps">
-                      <Input
-                        handleChange={value =>
-                          handleChange(FORM_STATE_FIELDS.REPS.fieldName, value)
-                        }
-                        name="reps"
-                        type="number"
-                        value={fields[FORM_STATE_FIELDS.REPS.fieldName].value}
-                      />
-                    </FormGroup>
+                {isWeightExercise && (
+                  <div className="add-set-form-weight">
                     <FormGroup label="Weight">
                       <Input
                         handleChange={value =>
@@ -182,7 +179,17 @@ const AddSetModal = ({
                         }
                       />
                     </FormGroup>
-                  </Fragment>
+                    <FormGroup label="Reps">
+                      <Input
+                        handleChange={value =>
+                          handleChange(FORM_STATE_FIELDS.REPS.fieldName, value)
+                        }
+                        name="reps"
+                        type="number"
+                        value={fields[FORM_STATE_FIELDS.REPS.fieldName].value}
+                      />
+                    </FormGroup>
+                  </div>
                 )}
 
                 <FormSubmit handleSubmit={submitToApi} isLoading={isSaving}>

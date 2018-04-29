@@ -13,6 +13,7 @@ import { closeModal } from '../../../actions/modal'
 
 import AddExerciseModal from './AddExerciseModal'
 import AddSetModal from './AddSetModal'
+import AddWeightModal from './AddWeightModal'
 import Overlay from '../overlays/Overlay'
 import OverlayClose from '../overlays/OverlayClose'
 
@@ -98,6 +99,14 @@ class Modal extends Component {
         return (
           <AddSetModal
             {..._.pick(modalOpts, ['exerciseId'])}
+            completedForm={() => this.closeModal()}
+          />
+        )
+
+      case MODAL_TYPES.ADD_WEIGHT:
+        return (
+          <AddWeightModal
+            {..._.pick(modalOpts, ['date'])}
             completedForm={() => this.closeModal()}
           />
         )

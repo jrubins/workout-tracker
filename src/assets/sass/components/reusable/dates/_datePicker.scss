@@ -1,5 +1,6 @@
-.workout-date-header {
+.date-picker-header {
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
 
@@ -12,15 +13,17 @@
   }
 }
 
-.workout-date {
+.selected-date {
   width: 200px;
 
   text-align: center;
 }
 
-.workout-add-exercise {
-  display: block;
+.date-picker-today-link {
+  display: flex;
+  position: absolute;
+  top: -30px;
+  align-items: center;
 
-  width: 100%;
-  padding: 10px 0;
+  height: 30px;
 }

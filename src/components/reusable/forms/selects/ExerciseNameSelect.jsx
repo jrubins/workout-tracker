@@ -8,7 +8,7 @@ import { getExercises } from '../../../../reducers'
 import Select from '../fields/Select'
 
 const ExerciseNameSelect = ({ data, ...rest }) => {
-  const exerciseNames = _.map(data, 'name')
+  const exerciseNames = _.sortBy(_.uniq(_.map(data, 'name')))
 
   return (
     <Select {...rest}>
