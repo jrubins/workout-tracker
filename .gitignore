@@ -6,6 +6,7 @@ stats.json
 .babel-cache
 .DS_Store
 .eslintcache
+.jest-cache
 .tmp
 
 # Logging

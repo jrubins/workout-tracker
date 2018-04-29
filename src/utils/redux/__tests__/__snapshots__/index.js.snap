@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`redux tests createDataReducer allows a function to be used in the saveActionTypes keys 1`] = `
+Array [
+  Object {
+    "blah": "kazaam",
+    "id": 1,
+  },
+  Object {
+    "huey": "kaphooey",
+    "id": 2,
+  },
+]
+`;
+
+exports[`redux tests createDataReducer allows an optional data transformer to be specified 1`] = `
+Array [
+  Object {
+    "customAttr": "fakestuff",
+    "foo": "bar",
+    "id": 1,
+  },
+]
+`;
+
+exports[`redux tests createDataReducer clears data 1`] = `Array []`;
+
+exports[`redux tests createDataReducer deletes data 1`] = `Array []`;
+
+exports[`redux tests createDataReducer prefers newer data over old data 1`] = `
+Array [
+  Object {
+    "foo": "bar",
+    "id": 1,
+    "newDataPoint": "newData",
+  },
+]
+`;
+
+exports[`redux tests createDataReducer returns data on successfully fetch 1`] = `
+Array [
+  Object {
+    "foo": "bar",
+    "id": 1,
+  },
+]
+`;
+
+exports[`redux tests createDataReducer returns data on successfully fetchWithoutWrapper 1`] = `
+Array [
+  Object {
+    "foo": "bar",
+    "id": 1,
+  },
+]
+`;
+
+exports[`redux tests createDataReducer uniquely saves data by ID 1`] = `
+Array [
+  Object {
+    "foo": "bar",
+    "id": 1,
+  },
+]
+`;
