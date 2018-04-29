@@ -1,5 +1,7 @@
 // Colors. Color names from: http://chir.ag/projects/name-that-color
 $alto: #ddd;
+$curious-blue: #1698ea;
+$kelp: #4b4c3e;
 $shark: #212529;
 $white: #fff;
 
@@ -23,4 +25,8 @@ $mobile-padding: 15px;
 // Theme variables.
 $theme-error: #d20202;
 
+// Specific shared styles.
+$modal-box-shadow: 10px 10px 30px 0 rgba(0, 0, 0, .21);
+
 // z-index values
+$zindex-modal: 2000;

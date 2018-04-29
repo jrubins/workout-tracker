@@ -1,0 +1,53 @@
+.exercise {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid $alto;
+
+  font-size: 20px;
+  box-shadow: 0 0 2px $alto;
+}
+
+.exercise-header {
+  display: flex;
+  align-items: center;
+
+  margin-bottom: 10px;
+}
+
+.exercise-duration {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.exercise-details {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.exercise-set {
+  margin-right: 20px;
+
+  &:nth-child(n + 3) {
+    margin-top: 10px;
+  }
+}
+
+.exercise-add-set {
+  display: flex;
+
+  margin-top: 10px;
+}
+
+.exercise-set-number {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.exercise-set-details {
+  display: flex;
+}
+
+.exercise-metric:first-child {
+  margin-right: 10px;
+}

@@ -1,12 +1,25 @@
 import { combineReducers } from 'redux'
 
+import exercises, * as fromExercises from './exercises'
+import modal, * as fromModal from './modal'
 import user, * as fromUser from './user'
 
 const reducers = combineReducers({
+  exercises,
+  modal,
   user,
 })
 
 export default reducers
+
+// Exercises selectors.
+export const getExerciseById = (state, id) =>
+  fromExercises.getExerciseById(state.exercises, id)
+export const getExercises = state => fromExercises.getExercises(state.exercises)
+
+// Modal selectors.
+export const getModalOpts = state => fromModal.getModalOpts(state.modal)
+export const isModalOpen = state => fromModal.isModalOpen(state.modal)
 
 // User selectors.
 export const isUserAuthenticated = state =>

@@ -68,6 +68,10 @@ img {
 a,
 a:hover,
 a:focus {
+  color: $curious-blue;
+
+  font-size: 14px;
+  font-weight: bold;
   text-decoration: none;
   cursor: pointer;
 }
