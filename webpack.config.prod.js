@@ -36,7 +36,7 @@ module.exports = {
   },
   plugins: [
     // This is a shorthand plugin for the DefinePlugin.
-    new webpack.EnvironmentPlugin(['APP_ENV', 'NODE_ENV']),
+    new webpack.EnvironmentPlugin(['API_BASE_URL', 'APP_ENV', 'NODE_ENV']),
 
     new HtmlWebpackPlugin({
       favicon: buildConfig.paths.src.favicon,
