@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 
 import { MODAL_TYPES } from '../../../utils/modals'
 import {
@@ -76,7 +77,7 @@ class HomePage extends Component {
           <ChevronRight onClick={() => this.changeSelectedDate('next')} />
         </div>
         <div className="workouts">
-          {dayExercises.map(({ id, name, sets }) => (
+          {_.orderBy(dayExercises, 'createdAt').map(({ id, name, sets }) => (
             <Exercise key={id} id={id} name={name} sets={sets} />
           ))}
           <a
@@ -99,6 +100,7 @@ class HomePage extends Component {
 HomePage.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
+      createdAt: PropTypes.string.isRequired,
       date: PropTypes.number.isRequired,
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
