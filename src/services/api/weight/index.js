@@ -12,10 +12,12 @@ const WEIGHT_API_ENDPOINT = '/weight'
  *
  * @param {Object} opts
  * @param {Object} opts.data
+ * @param {String} opts.jwt
  * @returns {Promise}
  */
-export function createWeight({ data }) {
+export function createWeight({ data, jwt }) {
   return post(WEIGHT_API_ENDPOINT, {
+    authToken: jwt,
     body: data,
   })
 }
@@ -23,8 +25,12 @@ export function createWeight({ data }) {
 /**
  * Fetches all weights.
  *
+ * @param {Object} opts
+ * @param {String} opts.jwt
  * @returns {Promise}
  */
-export function fetchWeight() {
-  return get(WEIGHT_API_ENDPOINT)
+export function fetchWeight({ jwt }) {
+  return get(WEIGHT_API_ENDPOINT, {
+    authToken: jwt,
+  })
 }

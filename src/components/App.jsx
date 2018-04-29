@@ -1,21 +1,24 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 
-import BottomNavigation from './reusable/navigation/BottomNavigation'
 import ExercisesPage from './pages/exercises/ExercisesPage'
+import LoginPage from './pages/login/LoginPage'
+import LogoutPage from './pages/logout/LogoutPage'
 import Modal from './reusable/modals/Modal'
+import SignupPage from './pages/signup/SignupPage'
 import WeightPage from './pages/weight/WeightPage'
 
 const App = () => (
   <div className="app-container">
     <Switch>
       <Route component={ExercisesPage} exact path="/exercises" />
+      <Route component={LoginPage} exact path="/login" />
+      <Route component={LogoutPage} exact path="/logout" />
+      <Route component={SignupPage} exact path="/signup" />
       <Route component={WeightPage} exact path="/weight" />
 
       <Redirect to="/exercises" />
     </Switch>
-
-    <BottomNavigation />
 
     <Modal />
   </div>

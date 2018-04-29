@@ -14,7 +14,13 @@ export const REQUEST_SAVE_EXERCISE_SUCCESS = 'REQUEST_SAVE_EXERCISE_SUCCESS'
 export const CLOSE_MODAL = 'CLOSE_MODAL'
 export const OPEN_MODAL = 'OPEN_MODAL'
 
-// User action types.
+// Users action types.
+export const REQUEST_LOGIN = 'REQUEST_LOGIN'
+export const REQUEST_LOGIN_FAIL = 'REQUEST_LOGIN_FAIL'
+export const REQUEST_LOGIN_SUCCESS = 'REQUEST_LOGIN_SUCCESS'
+export const REQUEST_SIGNUP = 'REQUEST_SIGNUP'
+export const REQUEST_SIGNUP_FAIL = 'REQUEST_SIGNUP_FAIL'
+export const REQUEST_SIGNUP_SUCCESS = 'REQUEST_SIGNUP_SUCCESS'
 export const LOG_OUT = 'LOG_OUT'
 
 // Weight action types.

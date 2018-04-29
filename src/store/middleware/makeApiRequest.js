@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { error } from '../../utils/logs'
 import { STATUS_CODES } from '../../utils/api'
 
-import { isUserAuthenticated } from '../../reducers'
+import { getUserJwt } from '../../reducers'
 import { LOG_OUT } from '../../actions'
 
 /**
@@ -32,7 +32,7 @@ function makeApiRequest() {
       }
 
       state = getState()
-      const isAuthenticated = isUserAuthenticated(state)
+      const jwt = getUserJwt(state)
       const [loadingActionType, successActionType, failActionType] = actionTypes
       // See if we want to include any other action props.
       const actionProps = _.isFunction(actionPropsFn)
@@ -40,7 +40,7 @@ function makeApiRequest() {
         : {}
 
       if (
-        (!isPublic && !isAuthenticated) ||
+        (!isPublic && !jwt) ||
         (_.isFunction(isCachedFn) && isCachedFn(state))
       ) {
         return Promise.resolve(true)
@@ -52,9 +52,10 @@ function makeApiRequest() {
       })
 
       try {
-        const { data, headers } = await apiFn(
-          _.isFunction(requestData) ? requestData(state) : {}
-        )
+        const { data, headers } = await apiFn({
+          ...(_.isFunction(requestData) ? requestData(state) : {}),
+          jwt,
+        })
 
         // If we need to do some other sort of side effects on success, let's allow that.
         if (_.isFunction(successCb)) {

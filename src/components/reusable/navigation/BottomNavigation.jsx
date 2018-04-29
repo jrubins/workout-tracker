@@ -2,6 +2,7 @@ import React from 'react'
 
 import ExerciseIcon from '../icons/ExerciseIcon'
 import Link from './Link'
+import LogoutIcon from '../icons/LogoutIcon'
 import WeightIcon from '../icons/WeightIcon'
 
 const BottomNavigation = () => (
@@ -17,6 +18,12 @@ const BottomNavigation = () => (
         <Link to="/weight">
           <WeightIcon />
           <span>Weight</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/logout">
+          <LogoutIcon />
+          <span>Logout</span>
         </Link>
       </li>
     </ul>

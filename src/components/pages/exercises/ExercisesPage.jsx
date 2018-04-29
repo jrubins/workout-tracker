@@ -11,49 +11,53 @@ import { fetchExercises } from '../../../actions/exercises'
 import { openModal } from '../../../actions/modal'
 
 import ApiRequest from '../../reusable/api/ApiRequest'
+import AuthenticatedPage from '../../reusable/pages/AuthenticatedPage'
 import DatePicker from '../../reusable/dates/DatePicker'
 import Exercise from './Exercise'
 
 const ExercisesPage = ({ data, fetchExercises, openModal }) => (
-  <div className="exercises-page page">
-    <ApiRequest apiFn={fetchExercises} onMount={true} />
-    <DatePicker>
-      {selectedDate => {
-        // Filter out exercises that don't fall in the date range for the selected date.
-        const dayExercises = data.filter(
-          ({ date }) =>
-            date >= selectedDate && date <= getTimestamp(endOfDay(selectedDate))
-        )
+  <AuthenticatedPage>
+    <div className="exercises-page page">
+      <ApiRequest apiFn={fetchExercises} onMount={true} />
+      <DatePicker>
+        {selectedDate => {
+          // Filter out exercises that don't fall in the date range for the selected date.
+          const dayExercises = data.filter(
+            ({ date }) =>
+              date >= selectedDate &&
+              date <= getTimestamp(endOfDay(selectedDate))
+          )
 
-        return (
-          <div className="workouts">
-            {_.orderBy(dayExercises, 'createdAt').map(
-              ({ id, name, sets, type }) => (
-                <Exercise
-                  key={id}
-                  id={id}
-                  name={name}
-                  sets={sets}
-                  type={type}
-                />
-              )
-            )}
-            <a
-              className="workout-add-exercise"
-              onClick={() =>
-                openModal({
-                  date: selectedDate,
-                  type: MODAL_TYPES.ADD_EXERCISE,
-                })
-              }
-            >
-              + Add Exercise
-            </a>
-          </div>
-        )
-      }}
-    </DatePicker>
-  </div>
+          return (
+            <div className="workouts">
+              {_.orderBy(dayExercises, 'createdAt').map(
+                ({ id, name, sets, type }) => (
+                  <Exercise
+                    key={id}
+                    id={id}
+                    name={name}
+                    sets={sets}
+                    type={type}
+                  />
+                )
+              )}
+              <a
+                className="workout-add-exercise"
+                onClick={() =>
+                  openModal({
+                    date: selectedDate,
+                    type: MODAL_TYPES.ADD_EXERCISE,
+                  })
+                }
+              >
+                + Add Exercise
+              </a>
+            </div>
+          )
+        }}
+      </DatePicker>
+    </div>
+  </AuthenticatedPage>
 )
 
 ExercisesPage.propTypes = {

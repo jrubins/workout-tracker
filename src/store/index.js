@@ -25,12 +25,11 @@ export function configureStore() {
       applyMiddleware(makeApiRequest),
 
       // Persists specified state to local storage.
-      persistState([
-        'user',
-      ], {
+      persistState(['user'], {
         slicer: () => state => ({
           user: {
             isAuthenticated: state.user.isAuthenticated,
+            jwt: state.user.jwt,
           },
         }),
       }),

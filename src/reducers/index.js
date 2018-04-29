@@ -24,6 +24,7 @@ export const getModalOpts = state => fromModal.getModalOpts(state.modal)
 export const isModalOpen = state => fromModal.isModalOpen(state.modal)
 
 // User selectors.
+export const getUserJwt = state => fromUser.getUserJwt(state.user)
 export const isUserAuthenticated = state =>
   fromUser.isUserAuthenticated(state.user)
 

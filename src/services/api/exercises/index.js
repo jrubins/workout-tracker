@@ -12,10 +12,12 @@ const EXERCISES_API_ENDPOINT = '/exercises'
  *
  * @param {Object} opts
  * @param {Object} opts.data
+ * @param {String} opts.jwt
  * @returns {Promise}
  */
-export function createExercise({ data }) {
+export function createExercise({ data, jwt }) {
   return post(EXERCISES_API_ENDPOINT, {
+    authToken: jwt,
     body: data,
   })
 }
@@ -26,10 +28,12 @@ export function createExercise({ data }) {
  * @param {Object} opts
  * @param {Object} opts.data
  * @param {Number} opts.exerciseId
+ * @param {String} opts.jwt
  * @returns {Promise}
  */
-export function createExerciseSet({ data, exerciseId }) {
+export function createExerciseSet({ data, exerciseId, jwt }) {
   return post(`${EXERCISES_API_ENDPOINT}/${exerciseId}/sets`, {
+    authToken: jwt,
     body: data,
   })
 }
@@ -37,8 +41,12 @@ export function createExerciseSet({ data, exerciseId }) {
 /**
  * Fetches all exercises.
  *
+ * @param {Object} opts
+ * @param {String} opts.jwt
  * @returns {Promise}
  */
-export function fetchExercises() {
-  return get(EXERCISES_API_ENDPOINT)
+export function fetchExercises({ jwt }) {
+  return get(EXERCISES_API_ENDPOINT, {
+    authToken: jwt,
+  })
 }

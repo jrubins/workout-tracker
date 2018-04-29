@@ -11,52 +11,55 @@ import { fetchWeight } from '../../../actions/weight'
 import { openModal } from '../../../actions/modal'
 
 import ApiRequest from '../../reusable/api/ApiRequest'
+import AuthenticatedPage from '../../reusable/pages/AuthenticatedPage'
 import DatePicker from '../../reusable/dates/DatePicker'
 
 const WeightPage = ({ data, fetchWeight, openModal }) => (
-  <div className="weight-page page">
-    <ApiRequest apiFn={fetchWeight} onMount={true} />
-    <DatePicker>
-      {selectedDate => {
-        // Filter out weights that don't fall in the date range for the selected date.
-        const dayWeights = data.filter(({ date }) =>
-          isWithinDayRange(date, selectedDate)
-        )
+  <AuthenticatedPage>
+    <div className="weight-page page">
+      <ApiRequest apiFn={fetchWeight} onMount={true} />
+      <DatePicker>
+        {selectedDate => {
+          // Filter out weights that don't fall in the date range for the selected date.
+          const dayWeights = data.filter(({ date }) =>
+            isWithinDayRange(date, selectedDate)
+          )
 
-        return (
-          <div className="weights">
-            {_.orderBy(dayWeights, 'createdAt').map(
-              ({ createdAt, date, id, weight }) => {
-                const dateForWeight = isWithinDayRange(createdAt, date)
-                  ? createdAt
-                  : date
+          return (
+            <div className="weights">
+              {_.orderBy(dayWeights, 'createdAt').map(
+                ({ createdAt, date, id, weight }) => {
+                  const dateForWeight = isWithinDayRange(createdAt, date)
+                    ? createdAt
+                    : date
 
-                return (
-                  <div className="weight" key={id}>
-                    <div>{weight}</div>
-                    <div className="weight-date">
-                      {formatDate(dateForWeight, 'M/DD/YYYY h:mm A')}
+                  return (
+                    <div className="weight" key={id}>
+                      <div>{weight}</div>
+                      <div className="weight-date">
+                        {formatDate(dateForWeight, 'M/DD/YYYY h:mm A')}
+                      </div>
                     </div>
-                  </div>
-                )
-              }
-            )}
-            <a
-              className="add-weight-link"
-              onClick={() =>
-                openModal({
-                  date: selectedDate,
-                  type: MODAL_TYPES.ADD_WEIGHT,
-                })
-              }
-            >
-              + Add Weight
-            </a>
-          </div>
-        )
-      }}
-    </DatePicker>
-  </div>
+                  )
+                }
+              )}
+              <a
+                className="add-weight-link"
+                onClick={() =>
+                  openModal({
+                    date: selectedDate,
+                    type: MODAL_TYPES.ADD_WEIGHT,
+                  })
+                }
+              >
+                + Add Weight
+              </a>
+            </div>
+          )
+        }}
+      </DatePicker>
+    </div>
+  </AuthenticatedPage>
 )
 
 WeightPage.propTypes = {
