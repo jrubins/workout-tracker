@@ -1,9 +1,9 @@
 .page {
   max-width: $max-width;
   margin: 20px auto 0;
-  padding: 0 0 40px;
+  padding: 0 0 120px;
 
   @media (max-width: $screen-xs-max) {
-    padding: $mobile-padding $mobile-padding 0;
+    padding: $mobile-padding $mobile-padding 120px;
   }
 }

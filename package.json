@@ -4,14 +4,18 @@
   "description": "A workout tracker.",
   "author": "Jon Rubins <jonrubins@gmail.com>",
   "scripts": {
-    "build": "NODE_ENV=production webpack --progress --config webpack.config.prod.js",
-    "bundle:analyze": "NODE_ENV=production webpack --progress --config webpack.config.prod.js --profile --json > stats.json && webpack-bundle-analyzer stats.json",
-    "bundle:analyze:dev": "webpack --progress --config webpack.config.dev.js --profile --json > stats.json && webpack-bundle-analyzer stats.json",
+    "build":
+      "NODE_ENV=production webpack --progress --config webpack.config.prod.js",
+    "bundle:analyze":
+      "NODE_ENV=production webpack --progress --config webpack.config.prod.js --profile --json > stats.json && webpack-bundle-analyzer stats.json",
+    "bundle:analyze:dev":
+      "webpack --progress --config webpack.config.dev.js --profile --json > stats.json && webpack-bundle-analyzer stats.json",
     "precommit": "lint-staged && yarn test",
     "start": "git pull && yarn start:merge",
     "start:merge": "yarn && yarn start:offline",
     "start:debug": "DEBUG=true && yarn start",
-    "start:offline": "webpack-dev-server --progress --config webpack.config.dev.js",
+    "start:offline":
+      "webpack-dev-server --progress --config webpack.config.dev.js",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch"
   },
@@ -30,12 +34,8 @@
     "clearMocks": true,
     "resetMocks": true,
     "resetModules": true,
-    "roots": [
-      "<rootDir>/src/"
-    ],
-    "setupFiles": [
-      "<rootDir>/src/utils/tests/setup/"
-    ]
+    "roots": ["<rootDir>/src/"],
+    "setupFiles": ["<rootDir>/src/utils/tests/setup/"]
   },
   "lint-staged": {
     "*.{js,jsx}": [
@@ -43,13 +43,8 @@
       "eslint --fix --cache --ext=.js,.jsx",
       "git add"
     ],
-    "*.{json,css,md}": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.{scss}": [
-      "sass-lint -v -q"
-    ]
+    "*.{json,css,md}": ["prettier --write", "git add"],
+    "*.{scss}": ["sass-lint -v -q"]
   },
   "dependencies": {
     "classnames": "2.2.5",
@@ -63,6 +58,7 @@
     "react-dom": "16.2.0",
     "react-redux": "5.0.7",
     "react-router-dom": "4.2.2",
+    "recharts": "1.0.0-beta.10",
     "redux": "3.7.2",
     "redux-localstorage": "0.4.1",
     "redux-thunk": "2.2.0"

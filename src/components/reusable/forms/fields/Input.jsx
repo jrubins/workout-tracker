@@ -44,6 +44,7 @@ class Input extends Component {
       name,
       placeholder,
       setInputRef,
+      tabindex,
       type,
       uncontrolled,
       value,
@@ -72,6 +73,7 @@ class Input extends Component {
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
+        tabIndex={tabindex}
         type={type}
       />
     )
@@ -90,6 +92,7 @@ Input.propTypes = {
   name: PropTypes.string,
   placeholder: PropTypes.string,
   setInputRef: PropTypes.func,
+  tabindex: PropTypes.string,
   type: PropTypes.string.isRequired,
   uncontrolled: PropTypes.bool,
   value: PropTypes.oneOfType([

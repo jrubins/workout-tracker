@@ -97,6 +97,7 @@ const AddSetModal = ({
                               )
                             }
                             name="distance"
+                            tabindex="1"
                             type="number"
                             value={
                               fields[FORM_STATE_FIELDS.DISTANCE.fieldName].value
@@ -112,6 +113,7 @@ const AddSetModal = ({
                               )
                             }
                             name="distanceUnit"
+                            tabindex="3"
                             type="text"
                             value={
                               fields[FORM_STATE_FIELDS.DISTANCE_UNIT.fieldName]
@@ -127,6 +129,7 @@ const AddSetModal = ({
                           handleChange(FORM_STATE_FIELDS.TIME.fieldName, value)
                         }
                         name="time"
+                        tabindex="2"
                         type="number"
                         value={fields[FORM_STATE_FIELDS.TIME.fieldName].value}
                       />
@@ -140,6 +143,7 @@ const AddSetModal = ({
                           )
                         }
                         name="timeUnit"
+                        tabindex="4"
                         type="text"
                         value={
                           fields[FORM_STATE_FIELDS.TIME_UNIT.fieldName].value
@@ -160,6 +164,7 @@ const AddSetModal = ({
                           )
                         }
                         name="weight"
+                        tabindex="1"
                         type="number"
                         value={fields[FORM_STATE_FIELDS.WEIGHT.fieldName].value}
                       />
@@ -173,6 +178,7 @@ const AddSetModal = ({
                           )
                         }
                         name="weightUnit"
+                        tabindex="3"
                         type="text"
                         value={
                           fields[FORM_STATE_FIELDS.WEIGHT_UNIT.fieldName].value
@@ -185,6 +191,7 @@ const AddSetModal = ({
                           handleChange(FORM_STATE_FIELDS.REPS.fieldName, value)
                         }
                         name="reps"
+                        tabindex="2"
                         type="number"
                         value={fields[FORM_STATE_FIELDS.REPS.fieldName].value}
                       />

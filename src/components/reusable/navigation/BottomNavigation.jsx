@@ -1,5 +1,6 @@
 import React from 'react'
 
+import AnalyzeIcon from '../icons/AnalyzeIcon'
 import ExerciseIcon from '../icons/ExerciseIcon'
 import Link from './Link'
 import LogoutIcon from '../icons/LogoutIcon'
@@ -18,6 +19,12 @@ const BottomNavigation = () => (
         <Link to="/weight">
           <WeightIcon />
           <span>Weight</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/analyze">
+          <AnalyzeIcon />
+          <span>Analyze</span>
         </Link>
       </li>
       <li>
