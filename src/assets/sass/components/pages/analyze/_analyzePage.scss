@@ -1,7 +1,4 @@
-.analyze-chart {
-  width: 100%;
-  height: 500px;
-
+.analyze-page {
   h4 {
     margin: 0 0 20px;
     color: $silver-chalice;
@@ -10,4 +7,49 @@
     font-weight: bold;
     text-transform: uppercase;
   }
+
+  .form-label a {
+    font-size: 12px;
+  }
+}
+
+.analyze-chart {
+  width: 100%;
+  height: 400px;
+  margin-top: 30px;
+}
+
+.tooltip-container {
+  padding: 10px;
+  border: 1px solid $alto;
+  border-radius: 4px;
+  background-color: $white;
+}
+
+.tooltip-label {
+  margin-bottom: 5px;
+}
+
+.recent-data-points {
+  margin-top: 60px;
+}
+
+.recent-data-points-header,
+.recent-data-point {
+  display: flex;
+
+  padding: 10px;
+
+  > div {
+    width: 50%;
+  }
+}
+
+.recent-data-points-header {
+  border-bottom: 1px solid $alto;
+  color: $silver-chalice;
+
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
 }

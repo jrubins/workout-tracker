@@ -10,6 +10,7 @@ import TimeMetricDisplay from './TimeMetricDisplay'
 
 const Exercise = ({ id, name, openModal, sets, type }) => {
   const isDistanceExercise = type === 'Distance'
+  const isRepsExercise = type === 'Reps'
   const isTimeExercise = type === 'Time'
   const isWeightExercise = type === 'Weight'
   const hasASet = sets.length > 0
@@ -50,11 +51,13 @@ const Exercise = ({ id, name, openModal, sets, type }) => {
                     </div>
                   </Fragment>
                 )}
-                {isWeightExercise && (
+                {(isRepsExercise || isWeightExercise) && (
                   <Fragment>
-                    <div className="exercise-metric">
-                      {weight} {weightUnit}
-                    </div>
+                    {isWeightExercise && (
+                      <div className="exercise-metric">
+                        {weight} {weightUnit}
+                      </div>
+                    )}
                     <div className="exercise-metric">{reps} reps</div>
                   </Fragment>
                 )}

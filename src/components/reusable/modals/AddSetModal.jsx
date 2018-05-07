@@ -42,6 +42,7 @@ const AddSetModal = ({
   saveExerciseSet,
 }) => {
   const isDistanceExercise = exercise.type === 'Distance'
+  const isRepsExercise = exercise.type === 'Reps'
   const isTimeExercise = exercise.type === 'Time'
   const isWeightExercise = exercise.type === 'Weight'
   const defaultDistanceUnit =
@@ -153,38 +154,45 @@ const AddSetModal = ({
                   </div>
                 )}
 
-                {isWeightExercise && (
+                {(isRepsExercise || isWeightExercise) && (
                   <div className="add-set-form-weight">
-                    <FormGroup label="Weight">
-                      <Input
-                        handleChange={value =>
-                          handleChange(
-                            FORM_STATE_FIELDS.WEIGHT.fieldName,
-                            value
-                          )
-                        }
-                        name="weight"
-                        tabindex="1"
-                        type="number"
-                        value={fields[FORM_STATE_FIELDS.WEIGHT.fieldName].value}
-                      />
-                    </FormGroup>
-                    <FormGroup label="Weight Unit">
-                      <Input
-                        handleChange={value =>
-                          handleChange(
-                            FORM_STATE_FIELDS.WEIGHT_UNIT.fieldName,
-                            value
-                          )
-                        }
-                        name="weightUnit"
-                        tabindex="3"
-                        type="text"
-                        value={
-                          fields[FORM_STATE_FIELDS.WEIGHT_UNIT.fieldName].value
-                        }
-                      />
-                    </FormGroup>
+                    {isWeightExercise && (
+                      <Fragment>
+                        <FormGroup label="Weight">
+                          <Input
+                            handleChange={value =>
+                              handleChange(
+                                FORM_STATE_FIELDS.WEIGHT.fieldName,
+                                value
+                              )
+                            }
+                            name="weight"
+                            tabindex="1"
+                            type="number"
+                            value={
+                              fields[FORM_STATE_FIELDS.WEIGHT.fieldName].value
+                            }
+                          />
+                        </FormGroup>
+                        <FormGroup label="Weight Unit">
+                          <Input
+                            handleChange={value =>
+                              handleChange(
+                                FORM_STATE_FIELDS.WEIGHT_UNIT.fieldName,
+                                value
+                              )
+                            }
+                            name="weightUnit"
+                            tabindex="3"
+                            type="text"
+                            value={
+                              fields[FORM_STATE_FIELDS.WEIGHT_UNIT.fieldName]
+                                .value
+                            }
+                          />
+                        </FormGroup>
+                      </Fragment>
+                    )}
                     <FormGroup label="Reps">
                       <Input
                         handleChange={value =>

@@ -1,16 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const TimeMetricDisplay = ({ time, timeUnit }) => {
-  const timeMin = Math.floor(time)
-  const timeSec = Math.ceil((time - timeMin) * 60)
+import { getTimeDisplay } from '../../../utils/exercises'
 
-  return (
-    <div className="time-metric-display">
-      {`${timeMin}${timeSec ? `:${timeSec}` : ''}`} {timeUnit}
-    </div>
-  )
-}
+const TimeMetricDisplay = ({ time, timeUnit }) => (
+  <div className="time-metric-display">{getTimeDisplay(time, timeUnit)}</div>
+)
 
 TimeMetricDisplay.propTypes = {
   time: PropTypes.number.isRequired,

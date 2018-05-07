@@ -89,6 +89,16 @@ export function isWithinDayRange(dateToCheck, dayForRange) {
 }
 
 /**
+ * Returns the relative date string for the passed in date.
+ *
+ * @param {Date|String|Number} date
+ * @returns {String}
+ */
+export function relativeDate(date) {
+  return moment(transformDate(date)).fromNow()
+}
+
+/**
  * Returns the start of the passed in date.
  *
  * @param {Date|String|Number} date

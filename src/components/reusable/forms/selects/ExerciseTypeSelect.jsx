@@ -4,7 +4,7 @@ import Select from '../fields/Select'
 
 const ExerciseTypeSelect = props => (
   <Select {...props}>
-    {['Distance', 'Time', 'Weight'].map(exerciseType => (
+    {['Distance', 'Reps', 'Time', 'Weight'].map(exerciseType => (
       <option key={exerciseType} value={exerciseType}>
         {exerciseType}
       </option>
