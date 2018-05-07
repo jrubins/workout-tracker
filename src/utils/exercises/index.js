@@ -7,7 +7,12 @@
  */
 export function getTimeDisplay(time, timeUnit = 'min') {
   const timeMin = Math.floor(time)
-  const timeSec = Math.ceil((time - timeMin) * 60)
+  let timeSec = (time - timeMin) * 60
+  if (timeSec >= 10) {
+    timeSec = Math.ceil(timeSec)
+  } else {
+    timeSec = `0${Math.floor(timeSec)}`
+  }
 
   return `${timeMin}${timeSec ? `:${timeSec}` : ''} ${timeUnit}`
 }
