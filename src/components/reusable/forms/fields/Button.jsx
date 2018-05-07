@@ -3,12 +3,15 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import cn from 'classnames'
 
+import CircleSnakeLoader from '../../loaders/CircleSnakeLoader'
+
 const Button = ({
   children,
   className,
   handleClick,
   isDanger,
   isDisabled,
+  isLoading,
   isSecondary,
   type,
 }) => (
@@ -28,6 +31,7 @@ const Button = ({
     }}
     type={type}
   >
+    {isLoading && <CircleSnakeLoader isInline={true} />}
     <span className="button-content">{children}</span>
   </button>
 )
@@ -42,6 +46,7 @@ Button.propTypes = {
   handleClick: PropTypes.func,
   isDanger: PropTypes.bool,
   isDisabled: PropTypes.bool,
+  isLoading: PropTypes.bool,
   isSecondary: PropTypes.bool,
   type: PropTypes.string,
 }

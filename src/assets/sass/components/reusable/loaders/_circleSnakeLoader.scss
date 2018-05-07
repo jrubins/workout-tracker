@@ -1,0 +1,62 @@
+.circle-snake-loader {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  justify-content: center;
+
+  transform: translate(-50%, -50%);
+  border: 4px solid $white;
+  border-bottom-color: transparent;
+
+  animation: animate-load .75s 0s infinite linear;
+}
+
+.circle-snake-loader,
+.circle-snake-loader::after {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.circle-snake-loader-colored {
+  border-color: $curious-blue;
+  border-bottom-color: transparent;
+}
+
+.circle-snake-loader-inline {
+  display: inline-flex;
+  position: static;
+
+  transform: none;
+
+  animation: animate-load-inline .75s 0s infinite linear;
+}
+
+@keyframes animate-load {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) rotate(180deg) scale(.8);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg) scale(1);
+  }
+}
+
+@keyframes animate-load-inline {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(.8);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
