@@ -1,4 +1,4 @@
-.add-weight-form {
+.add-exercise-form {
   .form-group {
     display: flex;
     flex-direction: column-reverse;
@@ -34,4 +34,21 @@
       text-transform: uppercase;
     }
   }
+}
+
+.add-exercise-form-new-exercise {
+  .input {
+    width: 100%;
+
+    font-size: 14px;
+    text-align: left;
+  }
+}
+
+.add-exercise-form-change-fields-link {
+  display: block;
+
+  padding: 10px 0;
+
+  text-align: center;
 }

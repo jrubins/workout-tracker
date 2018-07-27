@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import _ from 'lodash'
@@ -26,90 +26,128 @@ const FORM_STATE_FIELDS = {
   },
 }
 
-const AddExerciseModal = ({ completedForm, date, exercises, saveExercise }) => (
-  <ApiForm
-    apiFn={formData => {
-      const existingExerciseName =
-        formData[FORM_STATE_FIELDS.EXISTING_EXERCISE_NAME.fieldName]
-      const existingExercise = _.find(exercises, { name: existingExerciseName })
+class AddExerciseModal extends Component {
+  constructor(props) {
+    super(props)
 
-      return saveExercise({
-        date,
-        // Prefer an existing exercise name and fallback to a new one.
-        name: existingExercise
-          ? existingExercise.name
-          : formData[FORM_STATE_FIELDS.NEW_EXERCISE_NAME.fieldName],
-        type: existingExercise
-          ? existingExercise.type
-          : formData[FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName],
-      })
-    }}
-    completedForm={completedForm}
-  >
-    {({ isSaving, saveFormRef, submitToApi }) => (
-      <Form
-        ref={saveFormRef}
-        defaults={{
-          [FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName]: 'Weight',
+    this.state = {
+      newExerciseFieldsVisible: false,
+    }
+  }
+
+  render() {
+    const { completedForm, date, exercises, saveExercise } = this.props
+    const { newExerciseFieldsVisible } = this.state
+
+    return (
+      <ApiForm
+        apiFn={formData => {
+          const existingExerciseName =
+            formData[FORM_STATE_FIELDS.EXISTING_EXERCISE_NAME.fieldName]
+          const existingExercise = _.find(exercises, {
+            name: existingExerciseName,
+          })
+
+          return saveExercise({
+            date,
+            // Prefer an existing exercise name and fallback to a new one.
+            name: existingExercise
+              ? existingExercise.name
+              : formData[FORM_STATE_FIELDS.NEW_EXERCISE_NAME.fieldName],
+            type: existingExercise
+              ? existingExercise.type
+              : formData[FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName],
+          })
         }}
-        formFields={FORM_STATE_FIELDS}
+        completedForm={completedForm}
       >
-        {({ fields, handleChange }) => (
-          <div>
-            <FormGroup label="Existing Name">
-              <ExerciseNameSelect
-                handleChange={value =>
-                  handleChange(
-                    FORM_STATE_FIELDS.EXISTING_EXERCISE_NAME.fieldName,
-                    value
-                  )
-                }
-                name="existingExerciseName"
-                value={
-                  fields[FORM_STATE_FIELDS.EXISTING_EXERCISE_NAME.fieldName]
-                    .value
-                }
-              />
-            </FormGroup>
-            <FormGroup label="New Exercise">
-              <Input
-                handleChange={value =>
-                  handleChange(
-                    FORM_STATE_FIELDS.NEW_EXERCISE_NAME.fieldName,
-                    value
-                  )
-                }
-                name="newExercise"
-                type="text"
-                value={
-                  fields[FORM_STATE_FIELDS.NEW_EXERCISE_NAME.fieldName].value
-                }
-              />
-            </FormGroup>
-            <FormGroup label="New Exercise Type">
-              <ExerciseTypeSelect
-                handleChange={value =>
-                  handleChange(
-                    FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName,
-                    value
-                  )
-                }
-                name="newExerciseType"
-                value={
-                  fields[FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName].value
-                }
-              />
-            </FormGroup>
+        {({ isSaving, saveFormRef, submitToApi }) => (
+          <Form
+            ref={saveFormRef}
+            defaults={{
+              [FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName]: 'Weight',
+            }}
+            formFields={FORM_STATE_FIELDS}
+          >
+            {({ fields, handleChange }) => (
+              <div className="add-exercise-form">
+                {!newExerciseFieldsVisible && (
+                  <FormGroup label="Existing Name">
+                    <ExerciseNameSelect
+                      handleChange={value =>
+                        handleChange(
+                          FORM_STATE_FIELDS.EXISTING_EXERCISE_NAME.fieldName,
+                          value
+                        )
+                      }
+                      name="existingExerciseName"
+                      value={
+                        fields[
+                          FORM_STATE_FIELDS.EXISTING_EXERCISE_NAME.fieldName
+                        ].value
+                      }
+                    />
+                  </FormGroup>
+                )}
 
-            <FormSubmit handleSubmit={submitToApi} isLoading={isSaving}>
-              Save
-            </FormSubmit>
-          </div>
+                {newExerciseFieldsVisible && (
+                  <div className="add-exercise-form-new-exercise">
+                    <FormGroup label="New Exercise">
+                      <Input
+                        handleChange={value =>
+                          handleChange(
+                            FORM_STATE_FIELDS.NEW_EXERCISE_NAME.fieldName,
+                            value
+                          )
+                        }
+                        name="newExercise"
+                        type="text"
+                        value={
+                          fields[FORM_STATE_FIELDS.NEW_EXERCISE_NAME.fieldName]
+                            .value
+                        }
+                      />
+                    </FormGroup>
+                    <FormGroup label="New Exercise Type">
+                      <ExerciseTypeSelect
+                        handleChange={value =>
+                          handleChange(
+                            FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName,
+                            value
+                          )
+                        }
+                        name="newExerciseType"
+                        value={
+                          fields[FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName]
+                            .value
+                        }
+                      />
+                    </FormGroup>
+                  </div>
+                )}
+
+                <a
+                  className="add-exercise-form-change-fields-link"
+                  onClick={() => {
+                    this.setState({
+                      newExerciseFieldsVisible: !newExerciseFieldsVisible,
+                    })
+                  }}
+                >
+                  {newExerciseFieldsVisible ? 'Back' : '+ New Exercise'}
+                </a>
+
+                <FormSubmit handleSubmit={submitToApi} isLoading={isSaving}>
+                  Save
+                </FormSubmit>
+              </div>
+            )}
+          </Form>
         )}
-      </Form>
-    )}
-  </ApiForm>
-)
+      </ApiForm>
+    )
+  }
+}
 
 AddExerciseModal.propTypes = {
   exercises: PropTypes.array.isRequired,

@@ -11,7 +11,13 @@ import {
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
-import { formatDate, relativeDate } from '../../../utils/dates'
+import {
+  addToDate,
+  formatDate,
+  getTimestamp,
+  relativeDate,
+  startOfDay,
+} from '../../../utils/dates'
 import { getTimeDisplay } from '../../../utils/exercises'
 
 import { getExercises, getWeight } from '../../../reducers'
@@ -106,6 +112,40 @@ class AnalyzePage extends Component {
         }
       })
     }
+
+    const now = startOfDay(getTimestamp(Date.now()))
+    let numberOfDaysWorkingOut = 0
+    for (let i = 0; i < 7; i++) {
+      const startDayToCheck = getTimestamp(
+        startOfDay(
+          addToDate(now, {
+            duration: -1 * i,
+            unit: 'd',
+          })
+        )
+      )
+      const endDayToCheck = getTimestamp(
+        startOfDay(
+          addToDate(startDayToCheck, {
+            duration: 1,
+            unit: 'd',
+          })
+        )
+      )
+      console.log(startDayToCheck, endDayToCheck)
+      const exerciseOnDay = _.find(exercises, ({ date }) => {
+        if (date > startDayToCheck) {
+          // console.log(date, date > startDayToCheck, date < endDayToCheck)
+        }
+        return date >= startDayToCheck && date < endDayToCheck
+      })
+      console.log(exerciseOnDay)
+
+      if (exerciseOnDay) {
+        numberOfDaysWorkingOut = numberOfDaysWorkingOut + 1
+      }
+    }
+    console.log(numberOfDaysWorkingOut)
 
     return (
       <AuthenticatedPage>
