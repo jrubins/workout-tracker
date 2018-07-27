@@ -9,7 +9,7 @@ class ApiForm extends Component {
     super(props)
 
     this.state = {
-      error: {},
+      error: null,
       isSaving: false,
       successMessage: null,
     }
@@ -84,7 +84,7 @@ class ApiForm extends Component {
     }
 
     this.setState({
-      error: {},
+      error: null,
       isSaving: true,
     })
 
@@ -107,7 +107,7 @@ class ApiForm extends Component {
 
     if (this.mounted) {
       this.setState({
-        error: isApiRequestError(apiResult) ? apiResult : {},
+        error: isApiRequestError(apiResult) ? apiResult : null,
         isSaving: false,
       })
     }

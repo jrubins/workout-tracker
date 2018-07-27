@@ -117,7 +117,7 @@ describe('api utils', () => {
       const errorStatusCode = 401
       const errorMessage = 'Unauthroized'
       const json = {
-        errors: [errorMessage],
+        message: errorMessage,
       }
       const error = makeApiResponseError({
         json,

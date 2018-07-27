@@ -1,4 +1,4 @@
-.add-set-form {
+.add-weight-form {
   .form-group {
     display: flex;
     flex-direction: column-reverse;
@@ -22,19 +22,6 @@
     text-align: center;
   }
 
-  .select {
-    position: absolute;
-    right: 0;
-
-    width: auto;
-    border: none;
-    outline: none;
-    color: $silver-chalice;
-
-    font-size: 20px;
-    font-weight: bold;
-  }
-
   .form-submit {
     margin-top: 40px;
 
@@ -47,11 +34,4 @@
       text-transform: uppercase;
     }
   }
-}
-
-.add-set-form-group {
-  display: flex;
-  position: relative;
-  align-items: flex-end;
-  justify-content: center;
 }

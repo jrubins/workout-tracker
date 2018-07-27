@@ -29,7 +29,7 @@ const AddWeightModal = ({ completedForm, date, saveWeight }) => (
     {({ isSaving, saveFormRef, submitToApi }) => (
       <Form ref={saveFormRef} formFields={FORM_STATE_FIELDS}>
         {({ fields, handleChange }) => (
-          <div>
+          <div className="add-weight-form">
             <FormGroup label="Weight">
               <Input
                 handleChange={value =>

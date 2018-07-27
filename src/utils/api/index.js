@@ -98,9 +98,7 @@ export function isApiSaveDataUnchanged(opts) {
  * @returns {Error}
  */
 export function makeApiResponseError({ statusCode, json }) {
-  const error = new Error(
-    _.isArray(json.errors) ? json.errors[0] : 'Internal server error'
-  )
+  const error = new Error(json.message || 'Internal server error')
   error.statusCode = statusCode
   error.data = json || {} // eslint-disable-line camelcase
 

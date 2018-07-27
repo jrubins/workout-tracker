@@ -14,8 +14,12 @@
   z-index: $zindex-modal;
 
   @media (max-width: $screen-xs-max) {
-    width: 100%;
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    width: auto;
     margin: 0;
+    transform: none;
   }
 
   .modal-open & {

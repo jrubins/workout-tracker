@@ -6,6 +6,7 @@ import { login } from '../../../actions/users'
 
 import ApiForm from '../../reusable/forms/ApiForm'
 import Form from '../../reusable/forms/Form'
+import FormError from '../../reusable/forms/FormError'
 import FormGroup from '../../reusable/forms/FormGroup'
 import FormSubmit from '../../reusable/forms/FormSubmit'
 import Input from '../../reusable/forms/fields/Input'
@@ -25,10 +26,11 @@ const LoginPage = ({ login }) => (
     <div className="login-page page">
       <h1>Welcome back!</h1>
       <ApiForm apiFn={login}>
-        {({ isSaving, saveFormRef, submitToApi }) => (
+        {({ error, isSaving, saveFormRef, submitToApi }) => (
           <Form ref={saveFormRef} formFields={FORM_STATE_FIELDS}>
             {({ fields, handleChange }) => (
               <div>
+                <FormError error={error} />
                 <FormGroup label="Email">
                   <Input
                     handleChange={value =>
