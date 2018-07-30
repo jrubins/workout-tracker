@@ -13,10 +13,14 @@ import Form from '../forms/Form'
 import FormGroup from '../forms/FormGroup'
 import FormSubmit from '../forms/FormSubmit'
 import Input from '../forms/fields/Input'
+import Textarea from '../forms/fields/Textarea'
 
 const FORM_STATE_FIELDS = {
   EXISTING_EXERCISE_NAME: {
     fieldName: 'existingExerciseName',
+  },
+  NEW_EXERCISE_DESCRIPTION: {
+    fieldName: 'newExerciseDescription',
   },
   NEW_EXERCISE_NAME: {
     fieldName: 'newExerciseName',
@@ -50,6 +54,9 @@ class AddExerciseModal extends Component {
 
           return saveExercise({
             date,
+            description: existingExercise
+              ? existingExercise.description
+              : formData[FORM_STATE_FIELDS.NEW_EXERCISE_DESCRIPTION.fieldName],
             // Prefer an existing exercise name and fallback to a new one.
             name: existingExercise
               ? existingExercise.name
@@ -92,7 +99,7 @@ class AddExerciseModal extends Component {
 
                 {newExerciseFieldsVisible && (
                   <div className="add-exercise-form-new-exercise">
-                    <FormGroup label="New Exercise">
+                    <FormGroup label="Name">
                       <Input
                         handleChange={value =>
                           handleChange(
@@ -108,7 +115,7 @@ class AddExerciseModal extends Component {
                         }
                       />
                     </FormGroup>
-                    <FormGroup label="New Exercise Type">
+                    <FormGroup label="Type">
                       <ExerciseTypeSelect
                         handleChange={value =>
                           handleChange(
@@ -120,6 +127,23 @@ class AddExerciseModal extends Component {
                         value={
                           fields[FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName]
                             .value
+                        }
+                      />
+                    </FormGroup>
+                    <FormGroup label="Description">
+                      <Textarea
+                        handleChange={value =>
+                          handleChange(
+                            FORM_STATE_FIELDS.NEW_EXERCISE_DESCRIPTION
+                              .fieldName,
+                            value
+                          )
+                        }
+                        name="newExerciseDescription"
+                        value={
+                          fields[
+                            FORM_STATE_FIELDS.NEW_EXERCISE_DESCRIPTION.fieldName
+                          ].value
                         }
                       />
                     </FormGroup>

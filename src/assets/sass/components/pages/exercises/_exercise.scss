@@ -1,17 +1,19 @@
 .exercise {
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid $alto;
-
   font-size: 20px;
-  box-shadow: 0 0 2px $alto;
 }
 
 .exercise-header {
-  display: flex;
-  align-items: center;
+  margin-bottom: 5px;
+}
 
-  margin-bottom: 10px;
+.exercise-muscle-group {
+  display: inline-block;
+
+  padding: 2px 10px;
+  border: 1px solid $curious-blue;
+  border-radius: 8px;
+
+  font-size: 12px;
 }
 
 .exercise-duration {
@@ -19,29 +21,34 @@
   font-size: 14px;
 }
 
-.exercise-details {
-  display: flex;
-  flex-wrap: wrap;
-}
+.exercise-sets {
+  margin-top: 40px;
 
-.exercise-set {
-  min-width: 48%;
+  h4 {
+    color: $silver-chalice;
 
-  &:nth-child(n + 3) {
-    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
   }
 }
 
-.exercise-add-set {
+.exercise-set {
   display: flex;
+  align-items: center;
 
   margin-top: 10px;
 }
 
 .exercise-set-number {
+  margin-right: 10px;
+  padding: 3px 8px;
+  border: 1px solid $silver-chalice;
+  border-radius: 50%;
+  color: $silver-chalice;
+
   font-size: 14px;
   font-weight: bold;
-  text-transform: uppercase;
 }
 
 .exercise-set-details {
@@ -50,4 +57,10 @@
 
 .exercise-metric:first-child {
   margin-right: 10px;
+}
+
+.exercise-add-set {
+  display: flex;
+
+  margin-top: 20px;
 }

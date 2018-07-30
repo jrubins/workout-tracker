@@ -8,12 +8,11 @@ import { openModal } from '../../../actions/modal'
 
 import TimeMetricDisplay from './TimeMetricDisplay'
 
-const Exercise = ({ id, name, openModal, sets, type }) => {
+const Exercise = ({ id, muscleGroups, name, openModal, sets, type }) => {
   const isDistanceExercise = type === 'Distance'
   const isRepsExercise = type === 'Reps'
   const isTimeExercise = type === 'Time'
   const isWeightExercise = type === 'Weight'
-  const hasASet = sets.length > 0
 
   return (
     <div className="exercise">
@@ -21,51 +20,55 @@ const Exercise = ({ id, name, openModal, sets, type }) => {
         <div className="exercise-name">{name}</div>
       </div>
       <div className="exercise-details">
-        {sets.map(
-          (
-            {
-              distance,
-              distanceUnit,
-              time,
-              timeUnit,
-              reps,
-              weight,
-              weightUnit,
-            },
-            i
-          ) => (
-            <div key={i} className="exercise-set">
-              {!isDistanceExercise && (
-                <div className="exercise-set-number">Set {i + 1}</div>
-              )}
-              <div className="exercise-set-details">
-                {(isDistanceExercise || isTimeExercise) && (
-                  <Fragment>
-                    {isDistanceExercise && (
+        {muscleGroups.map(muscleGroup => (
+          <div key={muscleGroup} className="exercise-muscle-group">
+            {muscleGroup}
+          </div>
+        ))}
+        <div className="exercise-sets">
+          <h4>sets</h4>
+          {sets.map(
+            (
+              {
+                distance,
+                distanceUnit,
+                time,
+                timeUnit,
+                reps,
+                weight,
+                weightUnit,
+              },
+              i
+            ) => (
+              <div key={i} className="exercise-set">
+                <div className="exercise-set-number">{i + 1}</div>
+                <div className="exercise-set-details">
+                  {(isDistanceExercise || isTimeExercise) && (
+                    <Fragment>
+                      {isDistanceExercise && (
+                        <div className="exercise-metric">
+                          {distance} {distanceUnit}
+                        </div>
+                      )}
                       <div className="exercise-metric">
-                        {distance} {distanceUnit}
+                        <TimeMetricDisplay time={time} timeUnit={timeUnit} />
                       </div>
-                    )}
-                    <div className="exercise-metric">
-                      <TimeMetricDisplay time={time} timeUnit={timeUnit} />
-                    </div>
-                  </Fragment>
-                )}
-                {(isRepsExercise || isWeightExercise) && (
-                  <Fragment>
-                    {isWeightExercise && (
-                      <div className="exercise-metric">
-                        {weight} {weightUnit}
-                      </div>
-                    )}
-                    <div className="exercise-metric">{reps} reps</div>
-                  </Fragment>
-                )}
+                    </Fragment>
+                  )}
+                  {(isRepsExercise || isWeightExercise) && (
+                    <Fragment>
+                      {isWeightExercise && (
+                        <div className="exercise-metric">
+                          {weight} {weightUnit}
+                        </div>
+                      )}
+                      <div className="exercise-metric">{reps} reps</div>
+                    </Fragment>
+                  )}
+                </div>
               </div>
-            </div>
-          )
-        )}
-        {(!isDistanceExercise || !hasASet) && (
+            )
+          )}
           <div className="exercise-add-set">
             <a
               onClick={() =>
@@ -78,7 +81,7 @@ const Exercise = ({ id, name, openModal, sets, type }) => {
               + Add Set
             </a>
           </div>
-        )}
+        </div>
       </div>
     </div>
   )
@@ -88,6 +91,7 @@ Exercise.propTypes = {
   openModal: PropTypes.func.isRequired,
 
   id: PropTypes.string.isRequired,
+  muscleGroups: PropTypes.arrayOf(PropTypes.string),
   name: PropTypes.string.isRequired,
   sets: PropTypes.arrayOf(
     PropTypes.shape({
