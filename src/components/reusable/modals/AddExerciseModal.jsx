@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import _ from 'lodash'
 
-import { getExercises } from '../../../reducers'
 import { saveExercise } from '../../../actions/exercises'
+import { saveExerciseType } from '../../../actions/exerciseTypes'
 
 import ApiForm from '../forms/ApiForm'
 import ExerciseNameSelect from '../forms/selects/ExerciseNameSelect'
@@ -40,30 +39,33 @@ class AddExerciseModal extends Component {
   }
 
   render() {
-    const { completedForm, date, exercises, saveExercise } = this.props
+    const { completedForm, date, saveExercise, saveExerciseType } = this.props
     const { newExerciseFieldsVisible } = this.state
 
     return (
       <ApiForm
-        apiFn={formData => {
-          const existingExerciseName =
-            formData[FORM_STATE_FIELDS.EXISTING_EXERCISE_NAME.fieldName]
-          const existingExercise = _.find(exercises, {
-            name: existingExerciseName,
-          })
+        apiFn={async formData => {
+          const isNewExerciseType = !formData[
+            FORM_STATE_FIELDS.EXISTING_EXERCISE_NAME.fieldName
+          ]
+          let saveExerciseTypeResult
+
+          if (isNewExerciseType) {
+            saveExerciseTypeResult = await saveExerciseType({
+              description:
+                formData[FORM_STATE_FIELDS.NEW_EXERCISE_DESCRIPTION.fieldName],
+              muscleGroups: ['Abs'],
+              name: formData[FORM_STATE_FIELDS.NEW_EXERCISE_NAME.fieldName],
+              type: formData[FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName],
+              variation: 'variation 1',
+            })
+          }
 
           return saveExercise({
             date,
-            description: existingExercise
-              ? existingExercise.description
-              : formData[FORM_STATE_FIELDS.NEW_EXERCISE_DESCRIPTION.fieldName],
-            // Prefer an existing exercise name and fallback to a new one.
-            name: existingExercise
-              ? existingExercise.name
-              : formData[FORM_STATE_FIELDS.NEW_EXERCISE_NAME.fieldName],
-            type: existingExercise
-              ? existingExercise.type
-              : formData[FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName],
+            exerciseType: isNewExerciseType
+              ? saveExerciseTypeResult.id
+              : formData[FORM_STATE_FIELDS.EXISTING_EXERCISE_NAME.fieldName],
           })
         }}
         completedForm={completedForm}
@@ -174,18 +176,14 @@ class AddExerciseModal extends Component {
 }
 
 AddExerciseModal.propTypes = {
-  exercises: PropTypes.array.isRequired,
   saveExercise: PropTypes.func.isRequired,
+  saveExerciseType: PropTypes.func.isRequired,
 
   completedForm: PropTypes.func.isRequired,
   date: PropTypes.number.isRequired,
 }
 
-export default connect(
-  state => ({
-    exercises: getExercises(state),
-  }),
-  {
-    saveExercise,
-  }
-)(AddExerciseModal)
+export default connect(null, {
+  saveExercise,
+  saveExerciseType,
+})(AddExerciseModal)

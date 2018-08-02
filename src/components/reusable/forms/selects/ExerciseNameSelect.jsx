@@ -3,32 +3,31 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
-import { getExercises } from '../../../../reducers'
+import { fetchExerciseTypes } from '../../../../services/api/exerciseTypes'
 
+import { getUserJwt } from '../../../../reducers'
+
+import ApiRequest from '../../api/ApiRequest'
 import Select from '../fields/Select'
 
-const ExerciseNameSelect = ({ data, ...rest }) => {
-  const exerciseNames = _.sortBy(_.uniq(_.map(data, 'name')))
-
-  return (
-    <Select {...rest}>
-      {exerciseNames.map(name => (
-        <option key={name} value={name}>
-          {name}
-        </option>
-      ))}
-    </Select>
-  )
-}
+const ExerciseNameSelect = ({ jwt, ...rest }) => (
+  <ApiRequest apiFn={() => fetchExerciseTypes({ jwt })} onMount={true}>
+    {({ data }) => (
+      <Select {...rest}>
+        {_.orderBy(_.get(data, 'data', []), 'name').map(({ id, name }) => (
+          <option key={id} value={id}>
+            {name}
+          </option>
+        ))}
+      </Select>
+    )}
+  </ApiRequest>
+)
 
 ExerciseNameSelect.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  jwt: PropTypes.string.isRequired,
 }
 
 export default connect(state => ({
-  data: getExercises(state),
+  jwt: getUserJwt(state),
 }))(ExerciseNameSelect)

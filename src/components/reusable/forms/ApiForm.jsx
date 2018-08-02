@@ -134,7 +134,7 @@ ApiForm.propTypes = {
   children: PropTypes.func.isRequired,
   completedForm: PropTypes.func,
   initialData: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.string,
   }),
   resetOnSuccess: PropTypes.bool,
 }

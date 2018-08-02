@@ -6,9 +6,11 @@ import { MODAL_TYPES } from '../../../utils/modals'
 
 import { openModal } from '../../../actions/modal'
 
+import PencilIcon from '../../reusable/icons/PencilIcon'
 import TimeMetricDisplay from './TimeMetricDisplay'
 
-const Exercise = ({ id, muscleGroups, name, openModal, sets, type }) => {
+const Exercise = ({ exerciseType, id, openModal, sets }) => {
+  const { description, muscleGroups, name, type, variation } = exerciseType
   const isDistanceExercise = type === 'Distance'
   const isRepsExercise = type === 'Reps'
   const isTimeExercise = type === 'Time'
@@ -17,7 +19,18 @@ const Exercise = ({ id, muscleGroups, name, openModal, sets, type }) => {
   return (
     <div className="exercise">
       <div className="exercise-header">
-        <div className="exercise-name">{name}</div>
+        <div className="exercise-name">
+          {name}{' '}
+          <PencilIcon
+            onClick={() =>
+              openModal({
+                exerciseType,
+                type: MODAL_TYPES.SAVE_EXERCISE_TYPE,
+              })
+            }
+          />
+        </div>
+        <div className="exercise-variation">{variation}</div>
       </div>
       <div className="exercise-details">
         {muscleGroups.map(muscleGroup => (
@@ -25,6 +38,7 @@ const Exercise = ({ id, muscleGroups, name, openModal, sets, type }) => {
             {muscleGroup}
           </div>
         ))}
+        <p className="exercise-description">{description}</p>
         <div className="exercise-sets">
           <h4>sets</h4>
           {sets.map(
@@ -90,9 +104,14 @@ const Exercise = ({ id, muscleGroups, name, openModal, sets, type }) => {
 Exercise.propTypes = {
   openModal: PropTypes.func.isRequired,
 
+  exerciseType: PropTypes.shape({
+    description: PropTypes.string,
+    muscleGroups: PropTypes.arrayOf(PropTypes.string),
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    variation: PropTypes.string,
+  }).isRequired,
   id: PropTypes.string.isRequired,
-  muscleGroups: PropTypes.arrayOf(PropTypes.string),
-  name: PropTypes.string.isRequired,
   sets: PropTypes.arrayOf(
     PropTypes.shape({
       distance: PropTypes.number,
@@ -104,7 +123,6 @@ Exercise.propTypes = {
       weightUnit: PropTypes.string,
     })
   ).isRequired,
-  type: PropTypes.string.isRequired,
 }
 
 export default connect(null, {

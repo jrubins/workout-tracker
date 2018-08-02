@@ -16,6 +16,7 @@ import AddSetModal from './AddSetModal'
 import AddWeightModal from './AddWeightModal'
 import Overlay from '../overlays/Overlay'
 import OverlayClose from '../overlays/OverlayClose'
+import SaveExerciseTypeModal from './SaveExerciseTypeModal'
 
 class Modal extends Component {
   constructor(props) {
@@ -107,6 +108,14 @@ class Modal extends Component {
         return (
           <AddWeightModal
             {..._.pick(modalOpts, ['date'])}
+            completedForm={() => this.closeModal()}
+          />
+        )
+
+      case MODAL_TYPES.SAVE_EXERCISE_TYPE:
+        return (
+          <SaveExerciseTypeModal
+            {..._.pick(modalOpts, ['exerciseType'])}
             completedForm={() => this.closeModal()}
           />
         )

@@ -4,6 +4,13 @@
 
 .exercise-header {
   margin-bottom: 5px;
+
+  .icon-pencil {
+    width: 17px;
+    height: 17px;
+
+    fill: $silver-chalice;
+  }
 }
 
 .exercise-muscle-group {
@@ -14,6 +21,20 @@
   border-radius: 8px;
 
   font-size: 12px;
+}
+
+.exercise-variation {
+  color: $silver-chalice;
+
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.exercise-description {
+  color: $silver-chalice;
+
+  font-size: 13px;
 }
 
 .exercise-duration {
