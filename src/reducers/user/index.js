@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux'
 import _ from 'lodash'
 
-import { LOG_OUT, REQUEST_LOGIN_SUCCESS } from '../../actions'
+import {
+  LOG_OUT,
+  REQUEST_LOGIN_SUCCESS,
+  REQUEST_SIGNUP_SUCCESS,
+} from '../../actions'
 
 function isAuthenticated(state = false, action) {
   switch (action.type) {
@@ -9,6 +13,7 @@ function isAuthenticated(state = false, action) {
       return false
 
     case REQUEST_LOGIN_SUCCESS:
+    case REQUEST_SIGNUP_SUCCESS:
       return true
 
     default:
@@ -22,6 +27,7 @@ function jwt(state = null, action) {
       return null
 
     case REQUEST_LOGIN_SUCCESS:
+    case REQUEST_SIGNUP_SUCCESS:
       return _.get(action, 'data.jwt') || null
 
     default:

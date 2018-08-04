@@ -43,10 +43,11 @@ const AddSetModal = ({
   exerciseId,
   saveExerciseSet,
 }) => {
-  const isDistanceExercise = exercise.type === 'Distance'
-  const isRepsExercise = exercise.type === 'Reps'
-  const isTimeExercise = exercise.type === 'Time'
-  const isWeightExercise = exercise.type === 'Weight'
+  const { type } = exercise.exerciseType
+  const isDistanceExercise = type === 'Distance'
+  const isRepsExercise = type === 'Reps'
+  const isTimeExercise = type === 'Time'
+  const isWeightExercise = type === 'Weight'
   const defaultDistanceUnit =
     exercise.sets.length > 0 ? exercise.sets[0].distanceUnit : 'mile'
   const defaultWeightUnit =
@@ -91,6 +92,7 @@ const AddSetModal = ({
                       <FormGroup label="Distance">
                         <div className="add-set-form-group">
                           <Input
+                            autoFocus={true}
                             handleChange={value =>
                               handleChange(
                                 FORM_STATE_FIELDS.DISTANCE.fieldName,
@@ -142,6 +144,7 @@ const AddSetModal = ({
                       <FormGroup label="Weight">
                         <div className="add-set-form-group">
                           <Input
+                            autoFocus={true}
                             handleChange={value =>
                               handleChange(
                                 FORM_STATE_FIELDS.WEIGHT.fieldName,

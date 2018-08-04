@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import cn from 'classnames'
 
 import { info } from '../../../utils/logs'
 
 import Button from './fields/Button'
 
-const FormSubmit = ({ children, handleSubmit, isLoading }) => (
-  <div className="form-submit">
+const FormSubmit = ({ children, handleSubmit, hasInlineLoader, isLoading }) => (
+  <div className={cn('form-submit', { 'form-submit-loading': isLoading })}>
     <Button
       handleClick={event => {
         const submitResult = handleSubmit(event)
@@ -17,6 +18,7 @@ const FormSubmit = ({ children, handleSubmit, isLoading }) => (
           })
         }
       }}
+      hasInlineLoader={hasInlineLoader}
       isDisabled={isLoading}
       isLoading={isLoading}
       type="submit"
@@ -26,9 +28,14 @@ const FormSubmit = ({ children, handleSubmit, isLoading }) => (
   </div>
 )
 
+FormSubmit.defaultProps = {
+  hasInlineLoader: true,
+}
+
 FormSubmit.propTypes = {
   children: PropTypes.node.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  hasInlineLoader: PropTypes.bool,
   isLoading: PropTypes.bool.isRequired,
 }
 

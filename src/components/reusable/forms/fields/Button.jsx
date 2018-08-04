@@ -9,6 +9,7 @@ const Button = ({
   children,
   className,
   handleClick,
+  hasInlineLoader,
   isDanger,
   isDisabled,
   isLoading,
@@ -31,7 +32,7 @@ const Button = ({
     }}
     type={type}
   >
-    {isLoading && <CircleSnakeLoader isInline={true} />}
+    {isLoading && <CircleSnakeLoader isInline={hasInlineLoader} />}
     <span className="button-content">{children}</span>
   </button>
 )
@@ -44,6 +45,7 @@ Button.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   handleClick: PropTypes.func,
+  hasInlineLoader: PropTypes.bool,
   isDanger: PropTypes.bool,
   isDisabled: PropTypes.bool,
   isLoading: PropTypes.bool,

@@ -1,12 +1,15 @@
 import { combineReducers } from 'redux'
+import _ from 'lodash'
 
 import exercises, * as fromExercises from './exercises'
+import exerciseTypes, * as fromExerciseTypes from './exerciseTypes'
 import modal, * as fromModal from './modal'
 import user, * as fromUser from './user'
 import weight, * as fromWeight from './weight'
 
 const reducers = combineReducers({
   exercises,
+  exerciseTypes,
   modal,
   user,
   weight,
@@ -15,9 +18,29 @@ const reducers = combineReducers({
 export default reducers
 
 // Exercises selectors.
-export const getExerciseById = (state, id) =>
-  fromExercises.getExerciseById(state.exercises, id)
-export const getExercises = state => fromExercises.getExercises(state.exercises)
+export const getExerciseById = (state, id) => {
+  const exercise = fromExercises.getExerciseById(state.exercises, id)
+  if (exercise) {
+    return {
+      ...exercise,
+      exerciseType: getExerciseTypeById(state, exercise.exerciseType),
+    }
+  }
+}
+export const getExercises = state => {
+  const exercises = fromExercises.getExercises(state.exercises)
+
+  return _.map(exercises, exercise => ({
+    ...exercise,
+    exerciseType: getExerciseTypeById(state, exercise.exerciseType),
+  }))
+}
+
+// Exercise types selectors.
+export const getExerciseTypes = state =>
+  fromExerciseTypes.getExerciseTypes(state.exerciseTypes)
+export const getExerciseTypeById = (state, id) =>
+  fromExerciseTypes.getExerciseTypeById(state.exerciseTypes, id)
 
 // Modal selectors.
 export const getModalOpts = state => fromModal.getModalOpts(state.modal)

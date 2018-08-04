@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { login } from '../../../actions/users'
@@ -52,9 +53,14 @@ const LoginPage = ({ login }) => (
                   />
                 </FormGroup>
 
-                <FormSubmit handleSubmit={submitToApi} isLoading={isSaving}>
-                  Log in
-                </FormSubmit>
+                <div className="login-form-actions">
+                  <div>
+                    Need an account? <Link to="/signup">Sign up.</Link>
+                  </div>
+                  <FormSubmit handleSubmit={submitToApi} isLoading={isSaving}>
+                    Log in
+                  </FormSubmit>
+                </div>
               </div>
             )}
           </Form>

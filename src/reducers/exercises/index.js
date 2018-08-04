@@ -11,6 +11,11 @@ import {
 
 export default combineReducers({
   data: createDataReducer({
+    dataTransformerFn: data =>
+      _.map(data, exercise => ({
+        ...exercise,
+        exerciseType: _.get(exercise, 'exerciseType.id'),
+      })),
     saveActionTypes: {
       [FETCH_EXERCISES_SUCCESS]: '',
       [REQUEST_SAVE_EXERCISE_SUCCESS]: '',

@@ -1,32 +1,40 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import _ from 'lodash'
+import cn from 'classnames'
 
-import { getExercises } from '../../../reducers'
 import { saveExercise } from '../../../actions/exercises'
+import { saveExerciseType } from '../../../actions/exerciseTypes'
 
 import ApiForm from '../forms/ApiForm'
+import CheckmarkIcon from '../icons/CheckmarkIcon'
 import ExerciseNameSelect from '../forms/selects/ExerciseNameSelect'
 import ExerciseTypeSelect from '../forms/selects/ExerciseTypeSelect'
 import Form from '../forms/Form'
 import FormGroup from '../forms/FormGroup'
 import FormSubmit from '../forms/FormSubmit'
 import Input from '../forms/fields/Input'
+import MuscleGroupCheckboxes from '../forms/muscleGroups/MuscleGroupCheckboxes'
 import Textarea from '../forms/fields/Textarea'
 
 const FORM_STATE_FIELDS = {
-  EXISTING_EXERCISE_NAME: {
-    fieldName: 'existingExerciseName',
+  EXERCISE_DESCRIPTION: {
+    fieldName: 'description',
   },
-  NEW_EXERCISE_DESCRIPTION: {
-    fieldName: 'newExerciseDescription',
+  EXERCISE_EXERCISE_TYPE: {
+    fieldName: 'exerciseType',
   },
-  NEW_EXERCISE_NAME: {
-    fieldName: 'newExerciseName',
+  EXERCISE_MUSCLE_GROUPS: {
+    fieldName: 'muscleGroups',
   },
-  NEW_EXERCISE_TYPE: {
-    fieldName: 'newExerciseType',
+  EXERCISE_NAME: {
+    fieldName: 'name',
+  },
+  EXERCISE_TYPE: {
+    fieldName: 'type',
+  },
+  EXERCISE_VARIATION: {
+    fieldName: 'variation',
   },
 }
 
@@ -40,30 +48,32 @@ class AddExerciseModal extends Component {
   }
 
   render() {
-    const { completedForm, date, exercises, saveExercise } = this.props
+    const { completedForm, date, saveExercise, saveExerciseType } = this.props
     const { newExerciseFieldsVisible } = this.state
 
     return (
       <ApiForm
-        apiFn={formData => {
-          const existingExerciseName =
-            formData[FORM_STATE_FIELDS.EXISTING_EXERCISE_NAME.fieldName]
-          const existingExercise = _.find(exercises, {
-            name: existingExerciseName,
-          })
+        apiFn={async formData => {
+          let saveExerciseTypeResult
+
+          if (newExerciseFieldsVisible) {
+            saveExerciseTypeResult = await saveExerciseType({
+              description:
+                formData[FORM_STATE_FIELDS.EXERCISE_DESCRIPTION.fieldName],
+              muscleGroups:
+                formData[FORM_STATE_FIELDS.EXERCISE_MUSCLE_GROUPS.fieldName],
+              name: formData[FORM_STATE_FIELDS.EXERCISE_NAME.fieldName],
+              type: formData[FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName],
+              variation:
+                formData[FORM_STATE_FIELDS.EXERCISE_VARIATION.fieldName],
+            })
+          }
 
           return saveExercise({
             date,
-            description: existingExercise
-              ? existingExercise.description
-              : formData[FORM_STATE_FIELDS.NEW_EXERCISE_DESCRIPTION.fieldName],
-            // Prefer an existing exercise name and fallback to a new one.
-            name: existingExercise
-              ? existingExercise.name
-              : formData[FORM_STATE_FIELDS.NEW_EXERCISE_NAME.fieldName],
-            type: existingExercise
-              ? existingExercise.type
-              : formData[FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName],
+            exerciseType: newExerciseFieldsVisible
+              ? saveExerciseTypeResult.id
+              : formData[FORM_STATE_FIELDS.EXERCISE_EXERCISE_TYPE.fieldName],
           })
         }}
         completedForm={completedForm}
@@ -72,25 +82,51 @@ class AddExerciseModal extends Component {
           <Form
             ref={saveFormRef}
             defaults={{
-              [FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName]: 'Weight',
+              [FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName]: 'Weight',
             }}
             formFields={FORM_STATE_FIELDS}
           >
             {({ fields, handleChange }) => (
               <div className="add-exercise-form">
+                <div className="add-exercise-form-tabs">
+                  <a
+                    className={cn('add-exercise-form-tab', {
+                      'add-exercise-form-tab-active': !newExerciseFieldsVisible,
+                    })}
+                    onClick={() => {
+                      this.setState({
+                        newExerciseFieldsVisible: false,
+                      })
+                    }}
+                  >
+                    Existing
+                  </a>
+                  <a
+                    className={cn('add-exercise-form-tab', {
+                      'add-exercise-form-tab-active': newExerciseFieldsVisible,
+                    })}
+                    onClick={() => {
+                      this.setState({
+                        newExerciseFieldsVisible: true,
+                      })
+                    }}
+                  >
+                    New
+                  </a>
+                </div>
                 {!newExerciseFieldsVisible && (
-                  <FormGroup label="Existing Name">
+                  <FormGroup label="Exercise">
                     <ExerciseNameSelect
                       handleChange={value =>
                         handleChange(
-                          FORM_STATE_FIELDS.EXISTING_EXERCISE_NAME.fieldName,
+                          FORM_STATE_FIELDS.EXERCISE_EXERCISE_TYPE.fieldName,
                           value
                         )
                       }
                       name="existingExerciseName"
                       value={
                         fields[
-                          FORM_STATE_FIELDS.EXISTING_EXERCISE_NAME.fieldName
+                          FORM_STATE_FIELDS.EXERCISE_EXERCISE_TYPE.fieldName
                         ].value
                       }
                     />
@@ -103,14 +139,30 @@ class AddExerciseModal extends Component {
                       <Input
                         handleChange={value =>
                           handleChange(
-                            FORM_STATE_FIELDS.NEW_EXERCISE_NAME.fieldName,
+                            FORM_STATE_FIELDS.EXERCISE_NAME.fieldName,
                             value
                           )
                         }
-                        name="newExercise"
+                        name="exerciseName"
                         type="text"
                         value={
-                          fields[FORM_STATE_FIELDS.NEW_EXERCISE_NAME.fieldName]
+                          fields[FORM_STATE_FIELDS.EXERCISE_NAME.fieldName]
+                            .value
+                        }
+                      />
+                    </FormGroup>
+                    <FormGroup label="Variation">
+                      <Input
+                        handleChange={value =>
+                          handleChange(
+                            FORM_STATE_FIELDS.EXERCISE_VARIATION.fieldName,
+                            value
+                          )
+                        }
+                        name="exerciseVariation"
+                        type="text"
+                        value={
+                          fields[FORM_STATE_FIELDS.EXERCISE_VARIATION.fieldName]
                             .value
                         }
                       />
@@ -119,13 +171,13 @@ class AddExerciseModal extends Component {
                       <ExerciseTypeSelect
                         handleChange={value =>
                           handleChange(
-                            FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName,
+                            FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName,
                             value
                           )
                         }
-                        name="newExerciseType"
+                        name="exerciseType"
                         value={
-                          fields[FORM_STATE_FIELDS.NEW_EXERCISE_TYPE.fieldName]
+                          fields[FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName]
                             .value
                         }
                       />
@@ -134,15 +186,29 @@ class AddExerciseModal extends Component {
                       <Textarea
                         handleChange={value =>
                           handleChange(
-                            FORM_STATE_FIELDS.NEW_EXERCISE_DESCRIPTION
-                              .fieldName,
+                            FORM_STATE_FIELDS.EXERCISE_DESCRIPTION.fieldName,
                             value
                           )
                         }
-                        name="newExerciseDescription"
+                        name="exerciseDescription"
                         value={
                           fields[
-                            FORM_STATE_FIELDS.NEW_EXERCISE_DESCRIPTION.fieldName
+                            FORM_STATE_FIELDS.EXERCISE_DESCRIPTION.fieldName
+                          ].value
+                        }
+                      />
+                    </FormGroup>
+                    <FormGroup label="Muscle Groups">
+                      <MuscleGroupCheckboxes
+                        handleChange={value =>
+                          handleChange(
+                            FORM_STATE_FIELDS.EXERCISE_MUSCLE_GROUPS.fieldName,
+                            value
+                          )
+                        }
+                        value={
+                          fields[
+                            FORM_STATE_FIELDS.EXERCISE_MUSCLE_GROUPS.fieldName
                           ].value
                         }
                       />
@@ -150,19 +216,12 @@ class AddExerciseModal extends Component {
                   </div>
                 )}
 
-                <a
-                  className="add-exercise-form-change-fields-link"
-                  onClick={() => {
-                    this.setState({
-                      newExerciseFieldsVisible: !newExerciseFieldsVisible,
-                    })
-                  }}
+                <FormSubmit
+                  handleSubmit={submitToApi}
+                  hasInlineLoader={false}
+                  isLoading={isSaving}
                 >
-                  {newExerciseFieldsVisible ? 'Back' : '+ New Exercise'}
-                </a>
-
-                <FormSubmit handleSubmit={submitToApi} isLoading={isSaving}>
-                  Save
+                  {!isSaving && <CheckmarkIcon />}
                 </FormSubmit>
               </div>
             )}
@@ -174,18 +233,14 @@ class AddExerciseModal extends Component {
 }
 
 AddExerciseModal.propTypes = {
-  exercises: PropTypes.array.isRequired,
   saveExercise: PropTypes.func.isRequired,
+  saveExerciseType: PropTypes.func.isRequired,
 
   completedForm: PropTypes.func.isRequired,
   date: PropTypes.number.isRequired,
 }
 
-export default connect(
-  state => ({
-    exercises: getExercises(state),
-  }),
-  {
-    saveExercise,
-  }
-)(AddExerciseModal)
+export default connect(null, {
+  saveExercise,
+  saveExerciseType,
+})(AddExerciseModal)
