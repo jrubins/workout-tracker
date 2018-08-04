@@ -34,6 +34,7 @@ class Input extends Component {
   render() {
     const {
       autoComplete,
+      autoFocus,
       disabled,
       handleBlur,
       handleChange,
@@ -61,6 +62,7 @@ class Input extends Component {
         {...controlledProps}
         ref={setInputRef}
         autoComplete={autoComplete}
+        autoFocus={autoFocus}
         className={cn('input', {
           'input-disabled': disabled,
         })}
@@ -82,6 +84,7 @@ class Input extends Component {
 
 Input.propTypes = {
   autoComplete: PropTypes.string,
+  autoFocus: PropTypes.bool,
   disabled: PropTypes.bool,
   handleBlur: PropTypes.func,
   handleChange: PropTypes.func,

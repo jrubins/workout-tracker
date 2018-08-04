@@ -1,0 +1,19 @@
+.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-box {
+  width: 20px;
+  height: 20px;
+  border: 1px solid $alto;
+  border-radius: 50%;
+
+  .checkbox-checked & {
+    border-color: $curious-blue;
+  }
+}
+
+.checkbox-label {
+  margin-left: 5px;
+}

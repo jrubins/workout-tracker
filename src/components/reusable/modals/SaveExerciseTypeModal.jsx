@@ -5,22 +5,30 @@ import { connect } from 'react-redux'
 import { saveExerciseType } from '../../../actions/exerciseTypes'
 
 import ApiForm from '../forms/ApiForm'
+import CheckmarkIcon from '../icons/CheckmarkIcon'
 import ExerciseTypeSelect from '../forms/selects/ExerciseTypeSelect'
 import Form from '../forms/Form'
 import FormGroup from '../forms/FormGroup'
 import FormSubmit from '../forms/FormSubmit'
 import Input from '../forms/fields/Input'
+import MuscleGroupCheckboxes from '../forms/muscleGroups/MuscleGroupCheckboxes'
 import Textarea from '../forms/fields/Textarea'
 
 const FORM_STATE_FIELDS = {
   EXERCISE_TYPE_DESCRIPTION: {
     fieldName: 'description',
   },
+  EXERCISE_TYPE_MUSCLE_GROUPS: {
+    fieldName: 'muscleGroups',
+  },
   EXERCISE_TYPE_NAME: {
     fieldName: 'name',
   },
   EXERCISE_TYPE_TYPE: {
     fieldName: 'type',
+  },
+  EXERCISE_TYPE_VARIATION: {
+    fieldName: 'variation',
   },
 }
 
@@ -93,10 +101,44 @@ class AddExerciseModal extends Component {
                       }
                     />
                   </FormGroup>
+                  <FormGroup label="Variation">
+                    <Input
+                      handleChange={value =>
+                        handleChange(
+                          FORM_STATE_FIELDS.EXERCISE_TYPE_VARIATION.fieldName,
+                          value
+                        )
+                      }
+                      name="variation"
+                      type="text"
+                      value={
+                        fields[
+                          FORM_STATE_FIELDS.EXERCISE_TYPE_VARIATION.fieldName
+                        ].value
+                      }
+                    />
+                  </FormGroup>
+                  <FormGroup label="Muscle Groups">
+                    <MuscleGroupCheckboxes
+                      handleChange={value =>
+                        handleChange(
+                          FORM_STATE_FIELDS.EXERCISE_TYPE_MUSCLE_GROUPS
+                            .fieldName,
+                          value
+                        )
+                      }
+                      value={
+                        fields[
+                          FORM_STATE_FIELDS.EXERCISE_TYPE_MUSCLE_GROUPS
+                            .fieldName
+                        ].value
+                      }
+                    />
+                  </FormGroup>
                 </div>
 
                 <FormSubmit handleSubmit={submitToApi} isLoading={isSaving}>
-                  Save
+                  <CheckmarkIcon />
                 </FormSubmit>
               </div>
             )}

@@ -92,6 +92,7 @@ const AddSetModal = ({
                       <FormGroup label="Distance">
                         <div className="add-set-form-group">
                           <Input
+                            autoFocus={true}
                             handleChange={value =>
                               handleChange(
                                 FORM_STATE_FIELDS.DISTANCE.fieldName,
@@ -143,6 +144,7 @@ const AddSetModal = ({
                       <FormGroup label="Weight">
                         <div className="add-set-form-group">
                           <Input
+                            autoFocus={true}
                             handleChange={value =>
                               handleChange(
                                 FORM_STATE_FIELDS.WEIGHT.fieldName,

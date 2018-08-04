@@ -13,14 +13,23 @@
   }
 }
 
-.exercise-muscle-group {
-  display: inline-block;
+.exercise-muscle-groups {
+  display: flex;
+  flex-wrap: wrap;
+}
 
+.exercise-muscle-group {
+  margin-bottom: 10px;
+  margin-right: 10px;
   padding: 2px 10px;
   border: 1px solid $curious-blue;
   border-radius: 8px;
 
   font-size: 12px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .exercise-variation {

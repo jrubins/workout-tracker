@@ -33,11 +33,13 @@ const Exercise = ({ exerciseType, id, openModal, sets }) => {
         <div className="exercise-variation">{variation}</div>
       </div>
       <div className="exercise-details">
-        {muscleGroups.map(muscleGroup => (
-          <div key={muscleGroup} className="exercise-muscle-group">
-            {muscleGroup}
-          </div>
-        ))}
+        <div className="exercise-muscle-groups">
+          {muscleGroups.sort().map(muscleGroup => (
+            <div key={muscleGroup} className="exercise-muscle-group">
+              {muscleGroup}
+            </div>
+          ))}
+        </div>
         <p className="exercise-description">{description}</p>
         <div className="exercise-sets">
           <h4>sets</h4>

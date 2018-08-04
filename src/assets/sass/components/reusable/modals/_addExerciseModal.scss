@@ -25,15 +25,42 @@
   .form-submit {
     margin-top: 40px;
 
-    text-align: center;
-
     .button {
-      width: 200px;
-      height: 50px;
+      position: relative;
 
-      text-transform: uppercase;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: 1px solid $alto;
+      border-radius: 50%;
+    }
+
+    .icon-checkmark {
+      width: 20px;
+      height: 20px;
     }
   }
+}
+
+.add-exercise-form-tabs {
+  display: flex;
+
+  margin-bottom: 20px;
+  border-bottom: 1px solid $alto;
+}
+
+.add-exercise-form-tab {
+  width: 75px;
+  margin-bottom: -2px;
+  padding: 10px 0;
+  color: inherit;
+
+  text-align: center;
+}
+
+.add-exercise-form-tab-active {
+  border-bottom: 2px solid $curious-blue;
+  color: $curious-blue;
 }
 
 .add-exercise-form-new-exercise {
