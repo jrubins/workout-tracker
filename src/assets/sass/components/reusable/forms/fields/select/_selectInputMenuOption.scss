@@ -1,0 +1,18 @@
+.select-input-menu-option {
+  padding: 5px 10px;
+  border-bottom: 1px solid $alto;
+
+  font-size: 13px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.select-input-menu-option-focused {
+  background-color: $alto;
+}

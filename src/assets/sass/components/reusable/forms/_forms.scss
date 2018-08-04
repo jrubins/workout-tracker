@@ -4,7 +4,13 @@
 @import 'fields/input';
 @import 'fields/multiCheckbox';
 @import 'fields/select';
+@import 'fields/select/selectInput';
+@import 'fields/select/selectInputMenu';
+@import 'fields/select/selectInputMenuOption';
 @import 'fields/textarea';
+
+// Selects.
+@import 'selects/exerciseTypes/exerciseTypeSelect';
 
 // Common form elements.
 @import 'formContent';

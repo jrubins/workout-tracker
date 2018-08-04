@@ -8,8 +8,8 @@ import { saveExerciseType } from '../../../actions/exerciseTypes'
 
 import ApiForm from '../forms/ApiForm'
 import CheckmarkIcon from '../icons/CheckmarkIcon'
-import ExerciseNameSelect from '../forms/selects/ExerciseNameSelect'
-import ExerciseTypeSelect from '../forms/selects/ExerciseTypeSelect'
+import ExerciseExerciseTypeSelect from '../forms/selects/ExerciseTypeSelect'
+import ExerciseTypeSelect from '../forms/selects/exerciseTypes/ExerciseTypeSelect'
 import Form from '../forms/Form'
 import FormGroup from '../forms/FormGroup'
 import FormSubmit from '../forms/FormSubmit'
@@ -73,7 +73,7 @@ class AddExerciseModal extends Component {
             date,
             exerciseType: newExerciseFieldsVisible
               ? saveExerciseTypeResult.id
-              : formData[FORM_STATE_FIELDS.EXERCISE_EXERCISE_TYPE.fieldName],
+              : formData[FORM_STATE_FIELDS.EXERCISE_EXERCISE_TYPE.fieldName].id,
           })
         }}
         completedForm={completedForm}
@@ -116,14 +116,14 @@ class AddExerciseModal extends Component {
                 </div>
                 {!newExerciseFieldsVisible && (
                   <FormGroup label="Exercise">
-                    <ExerciseNameSelect
+                    <ExerciseTypeSelect
                       handleChange={value =>
                         handleChange(
                           FORM_STATE_FIELDS.EXERCISE_EXERCISE_TYPE.fieldName,
                           value
                         )
                       }
-                      name="existingExerciseName"
+                      name="exerciseType"
                       value={
                         fields[
                           FORM_STATE_FIELDS.EXERCISE_EXERCISE_TYPE.fieldName
@@ -168,7 +168,7 @@ class AddExerciseModal extends Component {
                       />
                     </FormGroup>
                     <FormGroup label="Type">
-                      <ExerciseTypeSelect
+                      <ExerciseExerciseTypeSelect
                         handleChange={value =>
                           handleChange(
                             FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName,

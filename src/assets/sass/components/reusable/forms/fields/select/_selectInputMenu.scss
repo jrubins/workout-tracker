@@ -1,0 +1,19 @@
+.select-input-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+
+  width: 100%;
+  max-height: 300px;
+  border: 1px solid $alto;
+  background-color: $white;
+  box-shadow: $modal-box-shadow;
+
+  overflow: scroll;
+  z-index: $zindex-menu;
+}
+
+.select-input-menu-open {
+  display: block;
+}

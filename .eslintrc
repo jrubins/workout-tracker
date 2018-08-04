@@ -58,7 +58,6 @@
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
     "react/no-direct-mutation-state": 2,
-    "react/no-multi-comp": 2,
     "react/no-string-refs": 2,
     "react/no-unknown-property": 2,
     "react/prefer-stateless-function": 2,
