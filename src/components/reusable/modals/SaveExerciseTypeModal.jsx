@@ -137,8 +137,12 @@ class AddExerciseModal extends Component {
                   </FormGroup>
                 </div>
 
-                <FormSubmit handleSubmit={submitToApi} isLoading={isSaving}>
-                  <CheckmarkIcon />
+                <FormSubmit
+                  handleSubmit={submitToApi}
+                  hasInlineLoader={false}
+                  isLoading={isSaving}
+                >
+                  {!isSaving && <CheckmarkIcon />}
                 </FormSubmit>
               </div>
             )}
