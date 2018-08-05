@@ -46,7 +46,14 @@ class ExerciseTypeSelect extends Component {
       this.selectInput.blur()
     }
 
-    handleChange(option)
+    this.setState(
+      {
+        filterText: null,
+      },
+      () => {
+        handleChange(option)
+      }
+    )
   }
 
   render() {
@@ -67,7 +74,14 @@ class ExerciseTypeSelect extends Component {
 
           return (
             <SelectInput
-              filterText={filterText || (value ? value.name : null)}
+              filterText={
+                filterText ||
+                (value
+                  ? `${value.name}${
+                      value.variation ? ` - ${value.variation}` : ''
+                    }`
+                  : null)
+              }
               handleChange={this.changeFilterText}
               handleEnter={focusedOptionIndex =>
                 this.handleChange(filteredExerciseTypes[focusedOptionIndex])
