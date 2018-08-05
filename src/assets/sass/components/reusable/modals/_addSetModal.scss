@@ -18,7 +18,7 @@
     border: none;
     border-bottom: 1px solid $alto;
 
-    font-size: 60px;
+    font-size: 40px;
     text-align: center;
   }
 
@@ -38,13 +38,19 @@
   .form-submit {
     margin-top: 40px;
 
-    text-align: center;
-
     .button {
-      width: 200px;
-      height: 50px;
+      position: relative;
 
-      text-transform: uppercase;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: 1px solid $alto;
+      border-radius: 50%;
+    }
+
+    .icon-checkmark {
+      width: 20px;
+      height: 20px;
     }
   }
 }

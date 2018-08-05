@@ -6,6 +6,7 @@ import { getExerciseById } from '../../../reducers'
 import { saveExerciseSet } from '../../../actions/exercises'
 
 import ApiForm from '../forms/ApiForm'
+import CheckmarkIcon from '../icons/CheckmarkIcon'
 import DistanceUnitSelect from '../forms/selects/DistanceUnitSelect'
 import Form from '../forms/Form'
 import FormGroup from '../forms/FormGroup'
@@ -190,8 +191,12 @@ const AddSetModal = ({
                   </div>
                 )}
 
-                <FormSubmit handleSubmit={submitToApi} isLoading={isSaving}>
-                  Save
+                <FormSubmit
+                  handleSubmit={submitToApi}
+                  hasInlineLoader={false}
+                  isLoading={isSaving}
+                >
+                  {!isSaving && <CheckmarkIcon />}
                 </FormSubmit>
               </div>
             )

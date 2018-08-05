@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { saveWeight } from '../../../actions/weight'
 
 import ApiForm from '../forms/ApiForm'
+import CheckmarkIcon from '../icons/CheckmarkIcon'
 import Form from '../forms/Form'
 import FormGroup from '../forms/FormGroup'
 import FormSubmit from '../forms/FormSubmit'
@@ -42,8 +43,12 @@ const AddWeightModal = ({ completedForm, date, saveWeight }) => (
               />
             </FormGroup>
 
-            <FormSubmit handleSubmit={submitToApi} isLoading={isSaving}>
-              Save
+            <FormSubmit
+              handleSubmit={submitToApi}
+              hasInlineLoader={false}
+              isLoading={isSaving}
+            >
+              {!isSaving && <CheckmarkIcon />}
             </FormSubmit>
           </div>
         )}
