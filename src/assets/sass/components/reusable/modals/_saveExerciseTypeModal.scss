@@ -1,0 +1,20 @@
+.save-exercise-type-form {
+  .form-submit {
+    margin-top: 40px;
+
+    .button {
+      position: relative;
+
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: 1px solid $alto;
+      border-radius: 50%;
+    }
+
+    .icon-checkmark {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

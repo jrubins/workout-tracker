@@ -32,6 +32,7 @@ const AddWeightModal = ({ completedForm, date, saveWeight }) => (
           <div className="add-weight-form">
             <FormGroup label="Weight">
               <Input
+                autoFocus={true}
                 handleChange={value =>
                   handleChange(FORM_STATE_FIELDS.WEIGHT.fieldName, value)
                 }

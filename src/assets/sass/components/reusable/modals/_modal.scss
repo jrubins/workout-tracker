@@ -14,11 +14,11 @@
   z-index: $zindex-modal;
 
   @media (max-width: $screen-xs-max) {
-    top: 10px;
+    top: 0;
     right: 10px;
     left: 10px;
     width: auto;
-    margin: 0;
+    margin: 10px 0;
     transform: none;
   }
 
