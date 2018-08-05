@@ -4,9 +4,9 @@ import Select from '../fields/Select'
 
 const WeightUnitSelect = props => (
   <Select {...props}>
-    {['lb', 'kg'].map(exerciseType => (
-      <option key={exerciseType} value={exerciseType}>
-        {exerciseType}
+    {['lb', 'kg'].map(weightUnit => (
+      <option key={weightUnit} value={weightUnit}>
+        {weightUnit}
       </option>
     ))}
   </Select>

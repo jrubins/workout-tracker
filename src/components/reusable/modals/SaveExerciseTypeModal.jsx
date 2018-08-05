@@ -6,7 +6,7 @@ import { saveExerciseType } from '../../../actions/exerciseTypes'
 
 import ApiForm from '../forms/ApiForm'
 import CheckmarkIcon from '../icons/CheckmarkIcon'
-import ExerciseTypeSelect from '../forms/selects/ExerciseTypeSelect'
+import ExerciseCategorySelect from '../forms/selects/ExerciseCategorySelect'
 import Form from '../forms/Form'
 import FormGroup from '../forms/FormGroup'
 import FormSubmit from '../forms/FormSubmit'
@@ -15,6 +15,9 @@ import MuscleGroupCheckboxes from '../forms/muscleGroups/MuscleGroupCheckboxes'
 import Textarea from '../forms/fields/Textarea'
 
 const FORM_STATE_FIELDS = {
+  EXERCISE_TYPE_CATEGORY: {
+    fieldName: 'category',
+  },
   EXERCISE_TYPE_DESCRIPTION: {
     fieldName: 'description',
   },
@@ -23,9 +26,6 @@ const FORM_STATE_FIELDS = {
   },
   EXERCISE_TYPE_NAME: {
     fieldName: 'name',
-  },
-  EXERCISE_TYPE_TYPE: {
-    fieldName: 'type',
   },
   EXERCISE_TYPE_VARIATION: {
     fieldName: 'variation',
@@ -46,7 +46,7 @@ class AddExerciseModal extends Component {
           <Form
             ref={saveFormRef}
             defaults={{
-              [FORM_STATE_FIELDS.EXERCISE_TYPE_TYPE.fieldName]: 'Weight',
+              [FORM_STATE_FIELDS.EXERCISE_TYPE_CATEGORY.fieldName]: 'Weight',
             }}
             formFields={FORM_STATE_FIELDS}
             initialData={exerciseType}
@@ -70,18 +70,19 @@ class AddExerciseModal extends Component {
                       }
                     />
                   </FormGroup>
-                  <FormGroup label="Type">
-                    <ExerciseTypeSelect
+                  <FormGroup label="Category">
+                    <ExerciseCategorySelect
                       handleChange={value =>
                         handleChange(
-                          FORM_STATE_FIELDS.EXERCISE_TYPE_TYPE.fieldName,
+                          FORM_STATE_FIELDS.EXERCISE_TYPE_CATEGORY.fieldName,
                           value
                         )
                       }
-                      name="type"
+                      name="category"
                       value={
-                        fields[FORM_STATE_FIELDS.EXERCISE_TYPE_TYPE.fieldName]
-                          .value
+                        fields[
+                          FORM_STATE_FIELDS.EXERCISE_TYPE_CATEGORY.fieldName
+                        ].value
                       }
                     />
                   </FormGroup>

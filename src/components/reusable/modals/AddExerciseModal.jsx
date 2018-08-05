@@ -8,7 +8,7 @@ import { saveExerciseType } from '../../../actions/exerciseTypes'
 
 import ApiForm from '../forms/ApiForm'
 import CheckmarkIcon from '../icons/CheckmarkIcon'
-import ExerciseExerciseTypeSelect from '../forms/selects/ExerciseTypeSelect'
+import ExerciseCategorySelect from '../forms/selects/ExerciseCategorySelect'
 import ExerciseTypeSelect from '../forms/selects/exerciseTypes/ExerciseTypeSelect'
 import Form from '../forms/Form'
 import FormGroup from '../forms/FormGroup'
@@ -18,10 +18,13 @@ import MuscleGroupCheckboxes from '../forms/muscleGroups/MuscleGroupCheckboxes'
 import Textarea from '../forms/fields/Textarea'
 
 const FORM_STATE_FIELDS = {
+  EXERCISE_CATEGORY: {
+    fieldName: 'category',
+  },
   EXERCISE_DESCRIPTION: {
     fieldName: 'description',
   },
-  EXERCISE_EXERCISE_TYPE: {
+  EXERCISE_TYPE: {
     fieldName: 'exerciseType',
   },
   EXERCISE_MUSCLE_GROUPS: {
@@ -29,9 +32,6 @@ const FORM_STATE_FIELDS = {
   },
   EXERCISE_NAME: {
     fieldName: 'name',
-  },
-  EXERCISE_TYPE: {
-    fieldName: 'type',
   },
   EXERCISE_VARIATION: {
     fieldName: 'variation',
@@ -58,12 +58,12 @@ class AddExerciseModal extends Component {
 
           if (newExerciseFieldsVisible) {
             saveExerciseTypeResult = await saveExerciseType({
+              category: formData[FORM_STATE_FIELDS.EXERCISE_CATEGORY.fieldName],
               description:
                 formData[FORM_STATE_FIELDS.EXERCISE_DESCRIPTION.fieldName],
               muscleGroups:
                 formData[FORM_STATE_FIELDS.EXERCISE_MUSCLE_GROUPS.fieldName],
               name: formData[FORM_STATE_FIELDS.EXERCISE_NAME.fieldName],
-              type: formData[FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName],
               variation:
                 formData[FORM_STATE_FIELDS.EXERCISE_VARIATION.fieldName],
             })
@@ -73,7 +73,7 @@ class AddExerciseModal extends Component {
             date,
             exerciseType: newExerciseFieldsVisible
               ? saveExerciseTypeResult.id
-              : formData[FORM_STATE_FIELDS.EXERCISE_EXERCISE_TYPE.fieldName].id,
+              : formData[FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName].id,
           })
         }}
         completedForm={completedForm}
@@ -82,7 +82,7 @@ class AddExerciseModal extends Component {
           <Form
             ref={saveFormRef}
             defaults={{
-              [FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName]: 'Weight',
+              [FORM_STATE_FIELDS.EXERCISE_CATEGORY.fieldName]: 'Weight',
             }}
             formFields={FORM_STATE_FIELDS}
           >
@@ -119,15 +119,13 @@ class AddExerciseModal extends Component {
                     <ExerciseTypeSelect
                       handleChange={value =>
                         handleChange(
-                          FORM_STATE_FIELDS.EXERCISE_EXERCISE_TYPE.fieldName,
+                          FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName,
                           value
                         )
                       }
                       name="exerciseType"
                       value={
-                        fields[
-                          FORM_STATE_FIELDS.EXERCISE_EXERCISE_TYPE.fieldName
-                        ].value
+                        fields[FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName].value
                       }
                     />
                   </FormGroup>
@@ -135,7 +133,7 @@ class AddExerciseModal extends Component {
 
                 {newExerciseFieldsVisible && (
                   <div className="add-exercise-form-new-exercise">
-                    <FormGroup label="Name">
+                    <FormGroup label="Exercise">
                       <Input
                         handleChange={value =>
                           handleChange(
@@ -167,17 +165,17 @@ class AddExerciseModal extends Component {
                         }
                       />
                     </FormGroup>
-                    <FormGroup label="Type">
-                      <ExerciseExerciseTypeSelect
+                    <FormGroup label="Category">
+                      <ExerciseCategorySelect
                         handleChange={value =>
                           handleChange(
-                            FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName,
+                            FORM_STATE_FIELDS.EXERCISE_CATEGORY.fieldName,
                             value
                           )
                         }
-                        name="exerciseType"
+                        name="exerciseCategory"
                         value={
-                          fields[FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName]
+                          fields[FORM_STATE_FIELDS.EXERCISE_CATEGORY.fieldName]
                             .value
                         }
                       />

@@ -75,39 +75,39 @@ class AnalyzePage extends Component {
       'date'
     )
     const isDistanceExercise =
-      _.get(exercisesToAnalyze[0], 'type') === 'Distance'
-    const isRepsExercise = _.get(exercisesToAnalyze[0], 'type') === 'Reps'
-    const isTimeExercise = _.get(exercisesToAnalyze[0], 'type') === 'Time'
+      _.get(exercisesToAnalyze[0], 'category') === 'Distance'
+    const isRepsExercise = _.get(exercisesToAnalyze[0], 'category') === 'Reps'
+    const isTimeExercise = _.get(exercisesToAnalyze[0], 'category') === 'Time'
     let chartData
 
     if (analyzeWeight) {
       chartData = _.orderBy(weight, 'date')
     } else {
-      chartData = _.map(exercisesToAnalyze, ({ date, sets, type }) => {
-        if (type === 'Distance') {
+      chartData = _.map(exercisesToAnalyze, ({ category, date, sets }) => {
+        if (category === 'Distance') {
           return {
+            category,
             date,
             distance: sets[0].distance,
             time: sets[0].time,
-            type,
           }
-        } else if (type === 'Weight') {
+        } else if (category === 'Weight') {
           return {
+            category,
             date,
-            type,
             weight: sets[0].weight,
           }
-        } else if (type === 'Time') {
+        } else if (category === 'Time') {
           return {
+            category,
             date,
             time: sets[0].time,
-            type,
           }
-        } else if (type === 'Reps') {
+        } else if (category === 'Reps') {
           return {
+            category,
             date,
             reps: sets[0].reps,
-            type,
           }
         }
       })
@@ -244,7 +244,7 @@ class AnalyzePage extends Component {
                           {analyzeWeight && (
                             <div>Weight {payload[0].value} lb</div>
                           )}
-                          {payload[0].payload.type === 'Distance' && (
+                          {payload[0].payload.category === 'Distance' && (
                             <Fragment>
                               <div>Pace {getTimeDisplay(payload[0].value)}</div>
                               <div>Miles {payload[0].payload.distance}</div>
@@ -253,13 +253,13 @@ class AnalyzePage extends Component {
                               </div>
                             </Fragment>
                           )}
-                          {payload[0].payload.type === 'Weight' && (
+                          {payload[0].payload.category === 'Weight' && (
                             <div>Weight {payload[0].value}</div>
                           )}
-                          {payload[0].payload.type === 'Time' && (
+                          {payload[0].payload.category === 'Time' && (
                             <div>Time {getTimeDisplay(payload[0].value)}</div>
                           )}
-                          {payload[0].payload.type === 'Reps' && (
+                          {payload[0].payload.category === 'Reps' && (
                             <div>Reps {payload[0].value}</div>
                           )}
                         </div>
@@ -270,16 +270,16 @@ class AnalyzePage extends Component {
                 />
                 <Line
                   type="monotone"
-                  dataKey={({ distance, reps, time, type, weight }) => {
+                  dataKey={({ category, distance, reps, time, weight }) => {
                     if (analyzeWeight) {
                       return weight
-                    } else if (type === 'Distance') {
+                    } else if (category === 'Distance') {
                       return time / distance
-                    } else if (type === 'Weight') {
+                    } else if (category === 'Weight') {
                       return weight
-                    } else if (type === 'Time') {
+                    } else if (category === 'Time') {
                       return time
-                    } else if (type === 'Reps') {
+                    } else if (category === 'Reps') {
                       return reps
                     }
                   }}
@@ -302,7 +302,7 @@ class AnalyzePage extends Component {
                 </div>
               ))}
             {!analyzeWeight &&
-              _.reverse(exercisesToAnalyze).map(({ date, sets, type }) => (
+              _.reverse(exercisesToAnalyze).map(({ category, date, sets }) => (
                 <div key={date} className="recent-data-point">
                   <div>{relativeDate(date)}</div>
                   <div>
@@ -316,13 +316,13 @@ class AnalyzePage extends Component {
                           weight,
                           weightUnit,
                         }) => {
-                          if (type === 'Distance') {
+                          if (category === 'Distance') {
                             return `${distance} ${distanceUnit} - ${getTimeDisplay(
                               time
                             )} (${getTimeDisplay(time / distance)})`
-                          } else if (type === 'Time') {
+                          } else if (category === 'Time') {
                             return getTimeDisplay(time)
-                          } else if (type === 'Reps') {
+                          } else if (category === 'Reps') {
                             return reps
                           }
 
@@ -343,6 +343,7 @@ class AnalyzePage extends Component {
 AnalyzePage.propTypes = {
   exercises: PropTypes.arrayOf(
     PropTypes.shape({
+      category: PropTypes.string.isRequired,
       date: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       sets: PropTypes.arrayOf(
@@ -355,7 +356,6 @@ AnalyzePage.propTypes = {
           weightUnit: PropTypes.string,
         })
       ).isRequired,
-      type: PropTypes.string.isRequired,
     })
   ).isRequired,
   fetchExercises: PropTypes.func.isRequired,

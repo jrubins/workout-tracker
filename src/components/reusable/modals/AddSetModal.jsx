@@ -43,11 +43,11 @@ const AddSetModal = ({
   exerciseId,
   saveExerciseSet,
 }) => {
-  const { type } = exercise.exerciseType
-  const isDistanceExercise = type === 'Distance'
-  const isRepsExercise = type === 'Reps'
-  const isTimeExercise = type === 'Time'
-  const isWeightExercise = type === 'Weight'
+  const { category } = exercise.exerciseType
+  const isDistanceExercise = category === 'Distance'
+  const isRepsExercise = category === 'Reps'
+  const isTimeExercise = category === 'Time'
+  const isWeightExercise = category === 'Weight'
   const defaultDistanceUnit =
     exercise.sets.length > 0 ? exercise.sets[0].distanceUnit : 'mile'
   const defaultWeightUnit =

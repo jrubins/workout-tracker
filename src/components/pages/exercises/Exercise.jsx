@@ -10,11 +10,11 @@ import PencilIcon from '../../reusable/icons/PencilIcon'
 import TimeMetricDisplay from './TimeMetricDisplay'
 
 const Exercise = ({ exerciseType, id, openModal, sets }) => {
-  const { description, muscleGroups, name, type, variation } = exerciseType
-  const isDistanceExercise = type === 'Distance'
-  const isRepsExercise = type === 'Reps'
-  const isTimeExercise = type === 'Time'
-  const isWeightExercise = type === 'Weight'
+  const { category, description, muscleGroups, name, variation } = exerciseType
+  const isDistanceExercise = category === 'Distance'
+  const isRepsExercise = category === 'Reps'
+  const isTimeExercise = category === 'Time'
+  const isWeightExercise = category === 'Weight'
 
   return (
     <div className="exercise">
@@ -107,10 +107,10 @@ Exercise.propTypes = {
   openModal: PropTypes.func.isRequired,
 
   exerciseType: PropTypes.shape({
+    category: PropTypes.string.isRequired,
     description: PropTypes.string,
     muscleGroups: PropTypes.arrayOf(PropTypes.string),
     name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
     variation: PropTypes.string,
   }).isRequired,
   id: PropTypes.string.isRequired,
