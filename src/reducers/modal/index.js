@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux'
 
-import { CLOSE_MODAL, OPEN_MODAL } from '../../actions'
+import { CLOSE_MODAL, LOG_OUT, OPEN_MODAL } from '../../actions'
 
 function open(state = false, action) {
   switch (action.type) {
     case CLOSE_MODAL:
+    case LOG_OUT:
       return false
 
     case OPEN_MODAL:
@@ -18,6 +19,7 @@ function open(state = false, action) {
 function opts(state = {}, action) {
   switch (action.type) {
     case CLOSE_MODAL:
+    case LOG_OUT:
       return {}
 
     case OPEN_MODAL:
