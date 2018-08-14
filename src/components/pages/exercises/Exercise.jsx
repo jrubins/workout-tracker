@@ -46,6 +46,7 @@ const Exercise = ({ exerciseType, id, openModal, sets }) => {
           {sets.map(
             (
               {
+                _id: setId,
                 distance,
                 distanceUnit,
                 time,
@@ -56,7 +57,17 @@ const Exercise = ({ exerciseType, id, openModal, sets }) => {
               },
               i
             ) => (
-              <div key={i} className="exercise-set">
+              <div
+                key={i}
+                className="exercise-set"
+                onClick={() =>
+                  openModal({
+                    exerciseId: id,
+                    setId,
+                    type: MODAL_TYPES.SAVE_SET,
+                  })
+                }
+              >
                 <div className="exercise-set-number">{i + 1}</div>
                 <div className="exercise-set-details">
                   {(isDistanceExercise || isTimeExercise) && (
@@ -90,7 +101,7 @@ const Exercise = ({ exerciseType, id, openModal, sets }) => {
               onClick={() =>
                 openModal({
                   exerciseId: id,
-                  type: MODAL_TYPES.ADD_SET,
+                  type: MODAL_TYPES.SAVE_SET,
                 })
               }
             >

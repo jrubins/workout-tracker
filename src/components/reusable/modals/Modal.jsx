@@ -12,11 +12,11 @@ import { getModalOpts, isModalOpen } from '../../../reducers'
 import { closeModal } from '../../../actions/modal'
 
 import AddExerciseModal from './AddExerciseModal'
-import AddSetModal from './AddSetModal'
 import AddWeightModal from './AddWeightModal'
 import Overlay from '../overlays/Overlay'
 import OverlayClose from '../overlays/OverlayClose'
 import SaveExerciseTypeModal from './SaveExerciseTypeModal'
+import SaveSetModal from './SaveSetModal'
 
 class Modal extends Component {
   constructor(props) {
@@ -96,14 +96,6 @@ class Modal extends Component {
           />
         )
 
-      case MODAL_TYPES.ADD_SET:
-        return (
-          <AddSetModal
-            {..._.pick(modalOpts, ['exerciseId'])}
-            completedForm={() => this.closeModal()}
-          />
-        )
-
       case MODAL_TYPES.ADD_WEIGHT:
         return (
           <AddWeightModal
@@ -116,6 +108,14 @@ class Modal extends Component {
         return (
           <SaveExerciseTypeModal
             {..._.pick(modalOpts, ['exerciseType'])}
+            completedForm={() => this.closeModal()}
+          />
+        )
+
+      case MODAL_TYPES.SAVE_SET:
+        return (
+          <SaveSetModal
+            {..._.pick(modalOpts, ['exerciseId', 'setId'])}
             completedForm={() => this.closeModal()}
           />
         )

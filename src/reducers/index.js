@@ -27,6 +27,12 @@ export const getExerciseById = (state, id) => {
     }
   }
 }
+export const getExerciseSetById = (state, exerciseId, setId) => {
+  const exercise = fromExercises.getExerciseById(state.exercises, exerciseId)
+  if (exercise) {
+    return _.find(exercise.sets, { _id: setId })
+  }
+}
 export const getExercises = state => {
   const exercises = fromExercises.getExercises(state.exercises)
 

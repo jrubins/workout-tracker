@@ -1,6 +1,7 @@
 import {
   createExercise,
   createExerciseSet,
+  editExerciseSet,
   fetchExercises as apiFetchExercises,
 } from '../../services/api/exercises'
 
@@ -53,10 +54,11 @@ export function saveExercise(data) {
 }
 
 /**
- * Saves a new set for an exercise.
+ * Saves a new set for an exercise or edits an existing one.
  *
  * @param {Number} exerciseId
  * @param {Object} data
+ * @param {String} [data.id]
  * @returns {Object}
  */
 export function saveExerciseSet(exerciseId, data) {
@@ -66,7 +68,7 @@ export function saveExerciseSet(exerciseId, data) {
       REQUEST_SAVE_EXERCISE_SET_SUCCESS,
       REQUEST_SAVE_EXERCISE_SET_FAIL,
     ],
-    apiFn: createExerciseSet,
+    apiFn: data.id ? editExerciseSet : createExerciseSet,
     requestData: () => ({
       data,
       exerciseId,

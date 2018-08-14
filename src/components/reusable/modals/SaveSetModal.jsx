@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 
-import { getExerciseById } from '../../../reducers'
+import { getExerciseById, getExerciseSetById } from '../../../reducers'
 import { saveExerciseSet } from '../../../actions/exercises'
 
 import ApiForm from '../forms/ApiForm'
@@ -38,11 +39,12 @@ const FORM_STATE_FIELDS = {
   },
 }
 
-const AddSetModal = ({
+const SaveSetModal = ({
   completedForm,
   exercise,
   exerciseId,
   saveExerciseSet,
+  set,
 }) => {
   const { category } = exercise.exerciseType
   const isDistanceExercise = category === 'Distance'
@@ -69,6 +71,7 @@ const AddSetModal = ({
 
         saveExerciseSet(exerciseId, {
           ...formData,
+          id: _.get(set, '_id'),
           [FORM_STATE_FIELDS.TIME.fieldName]: timeMin,
           [FORM_STATE_FIELDS.TIME_UNIT.fieldName]: 'min',
         })
@@ -83,15 +86,16 @@ const AddSetModal = ({
             [FORM_STATE_FIELDS.WEIGHT_UNIT.fieldName]: defaultWeightUnit,
           }}
           formFields={FORM_STATE_FIELDS}
+          initialData={set}
         >
           {({ fields, handleChange }) => {
             return (
-              <div className="add-set-form">
+              <div className="save-set-form">
                 {(isDistanceExercise || isTimeExercise) && (
-                  <div className="add-set-form-distance-time">
+                  <div className="save-set-form-distance-time">
                     {isDistanceExercise && (
                       <FormGroup label="Distance">
-                        <div className="add-set-form-group">
+                        <div className="save-set-form-group">
                           <Input
                             autoFocus={true}
                             handleChange={value =>
@@ -127,6 +131,7 @@ const AddSetModal = ({
                     )}
                     <FormGroup label="Time (min.sec)">
                       <Input
+                        autoFocus={!isDistanceExercise}
                         handleChange={value =>
                           handleChange(FORM_STATE_FIELDS.TIME.fieldName, value)
                         }
@@ -140,10 +145,10 @@ const AddSetModal = ({
                 )}
 
                 {(isRepsExercise || isWeightExercise) && (
-                  <div className="add-set-form-weight">
+                  <div className="save-set-form-weight">
                     {isWeightExercise && (
                       <FormGroup label="Weight">
-                        <div className="add-set-form-group">
+                        <div className="save-set-form-group">
                           <Input
                             autoFocus={true}
                             handleChange={value =>
@@ -179,6 +184,7 @@ const AddSetModal = ({
                     )}
                     <FormGroup label="Reps">
                       <Input
+                        autoFocus={!isWeightExercise}
                         handleChange={value =>
                           handleChange(FORM_STATE_FIELDS.REPS.fieldName, value)
                         }
@@ -207,7 +213,7 @@ const AddSetModal = ({
   )
 }
 
-AddSetModal.propTypes = {
+SaveSetModal.propTypes = {
   exercise: PropTypes.shape({
     sets: PropTypes.arrayOf(
       PropTypes.shape({
@@ -217,16 +223,20 @@ AddSetModal.propTypes = {
     ).isRequired,
   }).isRequired,
   saveExerciseSet: PropTypes.func.isRequired,
+  set: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+  }),
 
   completedForm: PropTypes.func.isRequired,
   exerciseId: PropTypes.string.isRequired,
 }
 
 export default connect(
-  (state, { exerciseId }) => ({
+  (state, { exerciseId, setId }) => ({
     exercise: getExerciseById(state, exerciseId),
+    set: getExerciseSetById(state, exerciseId, setId),
   }),
   {
     saveExerciseSet,
   }
-)(AddSetModal)
+)(SaveSetModal)

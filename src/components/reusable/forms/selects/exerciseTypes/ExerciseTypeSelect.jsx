@@ -68,7 +68,8 @@ class ExerciseTypeSelect extends Component {
           if (filterText) {
             filteredExerciseTypes = _.filter(
               filteredExerciseTypes,
-              ({ name }) => name.toLowerCase().startsWith(filterText)
+              ({ name }) =>
+                name.toLowerCase().startsWith(filterText.toLowerCase())
             )
           }
 
