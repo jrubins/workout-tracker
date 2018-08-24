@@ -8,18 +8,18 @@ const buildConfig = require('./buildConfig')
 
 module.exports = {
   context: __dirname,
+  devServer: {
+    historyApiFallback: true,
+    hot: true,
+    port: buildConfig.serverPort,
+  },
   entry: [
     'react-hot-loader/patch',
     `webpack-dev-server/client?http://localhost:${buildConfig.serverPort}`,
     'webpack/hot/only-dev-server',
     buildConfig.paths.src.mainJs,
   ],
-  output: {
-    chunkFilename: 'js/[name].js',
-    filename: 'js/[name].js',
-    path: buildConfig.paths.dist,
-    publicPath: '/',
-  },
+  mode: 'development',
   module: {
     rules: [
       {
@@ -44,6 +44,26 @@ module.exports = {
       },
     ],
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          chunks: 'all',
+          name: 'vendor',
+          test: /[\\/]node_modules[\\/]/,
+        },
+      },
+    },
+    runtimeChunk: {
+      name: 'manifest',
+    },
+  },
+  output: {
+    chunkFilename: 'js/[name].js',
+    filename: 'js/[name].js',
+    path: buildConfig.paths.dist,
+    publicPath: '/',
+  },
   plugins: [
     new BundleAnalyzerPlugin({
       openAnalyzer: false,
@@ -67,37 +87,9 @@ module.exports = {
 
     // Ignore locales from moment.
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-
-    // Extracts common node modules from our async chunks.
-    new webpack.optimize.CommonsChunkPlugin({
-      async: 'node-async',
-      children: true,
-      minChunks: module =>
-        module.context && module.context.indexOf('node_modules') !== -1,
-      names: ['main'],
-    }),
-
-    // This makes our vendor bundle from node_modules modules.
-    new webpack.optimize.CommonsChunkPlugin({
-      minChunks: module =>
-        module.context && module.context.indexOf('node_modules') !== -1,
-      name: 'vendor',
-    }),
-
-    // This ensures that our vendor bundle name doesn't change between builds (unless the vendor contents change)
-    // by extracting out the webpack bootstrap code into its own file.
-    new webpack.optimize.CommonsChunkPlugin({
-      minChunks: Infinity,
-      name: 'manifest',
-    }),
   ],
   resolve: {
-    modules: ['node_modules', buildConfig.paths.base],
     extensions: ['.js', '.jsx'],
-  },
-  devServer: {
-    historyApiFallback: true,
-    hot: true,
-    port: buildConfig.serverPort,
+    modules: ['node_modules', buildConfig.paths.base],
   },
 }
