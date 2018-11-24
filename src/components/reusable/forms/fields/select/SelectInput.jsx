@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { KEYCODES } from '@jrubins/utils/lib/keyboard'
 import _ from 'lodash'
-
-import { KEYCODES } from '../../../../../utils/keyboard'
-
-import Input from '../Input'
+import Input from '@jrubins/react-components/lib/forms/fields/Input'
 
 class SelectInput extends Component {
   constructor(props) {

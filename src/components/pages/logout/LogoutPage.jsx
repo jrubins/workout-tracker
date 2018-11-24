@@ -1,25 +1,16 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React from 'react'
 
-import { logout } from '../../../actions/users'
-
+import { UserContext } from '../../contexts'
 import AuthenticatedPage from '../../reusable/pages/AuthenticatedPage'
 
-class LogoutPage extends Component {
-  componentDidMount() {
-    this.props.logout()
-  }
+const LogoutPage = () => (
+  <UserContext.Consumer>
+    {({ setJwt }) => {
+      setJwt(null)
 
-  render() {
-    return <AuthenticatedPage />
-  }
-}
+      return <AuthenticatedPage />
+    }}
+  </UserContext.Consumer>
+)
 
-LogoutPage.propTypes = {
-  logout: PropTypes.func.isRequired,
-}
-
-export default connect(null, {
-  logout,
-})(LogoutPage)
+export default LogoutPage

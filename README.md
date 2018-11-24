@@ -29,7 +29,7 @@ which yarn
 You should see output like the following:
 
 ```
-/Users/{yourUser}/.nvm/versions/node/v8.6.0/bin/yarn
+/Users/{yourUser}/.nvm/versions/node/vX.X.X/bin/yarn
 ```
 
 #### Starting the application

@@ -1,16 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
+import ApiForm from '@jrubins/react-components/lib/forms/ApiForm'
+import Form from '@jrubins/react-components/lib/forms/Form'
+import FormError from '@jrubins/react-components/lib/forms/FormError'
+import FormGroup from '@jrubins/react-components/lib/forms/FormGroup'
+import FormSubmit from '@jrubins/react-components/lib/forms/FormSubmit'
+import Input from '@jrubins/react-components/lib/forms/fields/Input'
 
-import { login } from '../../../actions/users'
+import { login } from '../../../utils/api/users'
 
-import ApiForm from '../../reusable/forms/ApiForm'
-import Form from '../../reusable/forms/Form'
-import FormError from '../../reusable/forms/FormError'
-import FormGroup from '../../reusable/forms/FormGroup'
-import FormSubmit from '../../reusable/forms/FormSubmit'
-import Input from '../../reusable/forms/fields/Input'
 import UnauthenticatedPage from '../../reusable/pages/UnauthenticatedPage'
 
 const FORM_STATE_FIELDS = {
@@ -22,11 +20,11 @@ const FORM_STATE_FIELDS = {
   },
 }
 
-const LoginPage = ({ login }) => (
+const LoginPage = () => (
   <UnauthenticatedPage>
     <div className="login-page page">
       <h1>Welcome back!</h1>
-      <ApiForm apiFn={login}>
+      <ApiForm apiFn={formData => login({ data: formData })}>
         {({ error, isSaving, saveFormRef, submitToApi }) => (
           <Form ref={saveFormRef} formFields={FORM_STATE_FIELDS}>
             {({ fields, handleChange }) => (
@@ -70,10 +68,4 @@ const LoginPage = ({ login }) => (
   </UnauthenticatedPage>
 )
 
-LoginPage.propTypes = {
-  login: PropTypes.func.isRequired,
-}
-
-export default connect(null, {
-  login,
-})(LoginPage)
+export default LoginPage

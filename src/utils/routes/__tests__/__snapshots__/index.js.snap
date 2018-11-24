@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`routes utils unStringifyQuery returns an empty object if there is no query string 1`] = `
-Object {
-  "blah": "ball",
-  "foo": "bar",
-}
-`;

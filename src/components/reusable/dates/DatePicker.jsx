@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import {
@@ -11,25 +11,26 @@ import {
 import ChevronLeftIcon from '../../reusable/icons/ChevronLeftIcon'
 import ChevronRightIcon from '../../reusable/icons/ChevronRightIcon'
 
-class DatePicker extends Component {
-  constructor(props) {
-    super(props)
+/**
+ * Returns the timestamp for the start of the current date.
+ *
+ * @returns {Number}
+ */
+function getStartOfToday() {
+  return getTimestamp(startOfDay(Date.now()))
+}
 
-    this.state = {
-      // Start with the current date as our selected date.
-      selectedDate: this.getStartOfToday(),
-    }
-
-    this.changeSelectedDate = this.changeSelectedDate.bind(this)
-  }
+const DatePicker = ({ children }) => {
+  // Start with the current date as our selected date.
+  const [selectedDate, setSelectedDate] = useState(getStartOfToday())
 
   /**
    * Changes the currently selected date either one forwards or one backwards.
    *
    * @param {String} direction
    */
-  changeSelectedDate(direction) {
-    let selectedDate = this.state.selectedDate
+  function changeSelectedDate(direction) {
+    let selectedDate = selectedDate
     if (direction === 'prev') {
       selectedDate = getTimestamp(
         addToDate(selectedDate, {
@@ -45,49 +46,33 @@ class DatePicker extends Component {
         })
       )
     } else if (direction === 'today') {
-      selectedDate = this.getStartOfToday()
+      selectedDate = getStartOfToday()
     }
 
-    this.setState({
-      selectedDate,
-    })
+    setSelectedDate(selectedDate)
   }
 
-  /**
-   * Returns the timestamp for the start of the current date.
-   *
-   * @returns {Number}
-   */
-  getStartOfToday() {
-    return getTimestamp(startOfDay(Date.now()))
-  }
-
-  render() {
-    const { children } = this.props
-    const { selectedDate } = this.state
-
-    return (
-      <div className="date-picker">
-        <div className="date-picker-header">
-          <ChevronLeftIcon onClick={() => this.changeSelectedDate('prev')} />
-          <div className="selected-date">
-            {formatDate(selectedDate, 'dddd, MMMM Do')}
-          </div>
-          <ChevronRightIcon onClick={() => this.changeSelectedDate('next')} />
-          {selectedDate !== this.getStartOfToday() && (
-            <a
-              className="date-picker-today-link"
-              onClick={() => this.changeSelectedDate('today')}
-            >
-              Back to Today
-            </a>
-          )}
+  return (
+    <div className="date-picker">
+      <div className="date-picker-header">
+        <ChevronLeftIcon onClick={() => changeSelectedDate('prev')} />
+        <div className="selected-date">
+          {formatDate(selectedDate, 'dddd, MMMM Do')}
         </div>
-
-        {children(selectedDate)}
+        <ChevronRightIcon onClick={() => changeSelectedDate('next')} />
+        {selectedDate !== getStartOfToday() && (
+          <a
+            className="date-picker-today-link"
+            onClick={() => changeSelectedDate('today')}
+          >
+            Back to Today
+          </a>
+        )}
       </div>
-    )
-  }
+
+      {children(selectedDate)}
+    </div>
+  )
 }
 
 DatePicker.propTypes = {

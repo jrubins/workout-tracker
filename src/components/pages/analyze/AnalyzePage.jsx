@@ -10,6 +10,8 @@ import {
 } from 'recharts'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import ApiRequest from '@jrubins/react-components/lib/api/ApiRequest'
+import FormGroup from '@jrubins/react-components/lib/forms/FormGroup'
 
 import {
   addToDate,
@@ -24,10 +26,8 @@ import { getExercises, getWeight } from '../../../reducers'
 import { fetchExercises } from '../../../actions/exercises'
 import { fetchWeight } from '../../../actions/weight'
 
-import ApiRequest from '../../reusable/api/ApiRequest'
 import AuthenticatedPage from '../../reusable/pages/AuthenticatedPage'
 import ExerciseNameSelect from '../../reusable/forms/selects/ExerciseNameSelect'
-import FormGroup from '../../reusable/forms/FormGroup'
 
 class AnalyzePage extends Component {
   constructor(props) {

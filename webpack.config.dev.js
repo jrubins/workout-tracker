@@ -1,5 +1,3 @@
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin
 const DotenvPlugin = require('webpack-dotenv-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
@@ -65,10 +63,6 @@ module.exports = {
     publicPath: '/',
   },
   plugins: [
-    new BundleAnalyzerPlugin({
-      openAnalyzer: false,
-    }),
-
     // We don't really use this as different env files for different people. Just a place to keep common
     // env variables for the project as a whole.
     new DotenvPlugin({

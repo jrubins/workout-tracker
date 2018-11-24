@@ -1,15 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
+import ApiForm from '@jrubins/react-components/lib/forms/ApiForm'
+import Form from '@jrubins/react-components/lib/forms/Form'
+import FormGroup from '@jrubins/react-components/lib/forms/FormGroup'
+import FormSubmit from '@jrubins/react-components/lib/forms/FormSubmit'
+import Input from '@jrubins/react-components/lib/forms/fields/Input'
 
-import { signup } from '../../../actions/users'
+import { signup } from '../../../utils/api/users'
 
-import ApiForm from '../../reusable/forms/ApiForm'
-import Form from '../../reusable/forms/Form'
-import FormGroup from '../../reusable/forms/FormGroup'
-import FormSubmit from '../../reusable/forms/FormSubmit'
-import Input from '../../reusable/forms/fields/Input'
 import UnauthenticatedPage from '../../reusable/pages/UnauthenticatedPage'
 
 const FORM_STATE_FIELDS = {
@@ -27,11 +25,11 @@ const FORM_STATE_FIELDS = {
   },
 }
 
-const SignupPage = ({ signup }) => (
+const SignupPage = () => (
   <UnauthenticatedPage>
     <div className="signup-page page">
       <h1>Let's get started!</h1>
-      <ApiForm apiFn={signup}>
+      <ApiForm apiFn={formData => signup({ data: formData })}>
         {({ isSaving, saveFormRef, submitToApi }) => (
           <Form ref={saveFormRef} formFields={FORM_STATE_FIELDS}>
             {({ fields, handleChange }) => (
@@ -97,10 +95,4 @@ const SignupPage = ({ signup }) => (
   </UnauthenticatedPage>
 )
 
-SignupPage.propTypes = {
-  signup: PropTypes.func.isRequired,
-}
-
-export default connect(null, {
-  signup,
-})(SignupPage)
+export default SignupPage

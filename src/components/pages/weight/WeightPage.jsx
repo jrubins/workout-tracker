@@ -1,86 +1,79 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React, { useState } from 'react'
 import _ from 'lodash'
+import ApiRequest from '@jrubins/react-components/lib/api/ApiRequest'
 
-import { MODAL_TYPES } from '../../../utils/modals'
+import { fetchWeight } from '../../../utils/api/weight'
 import { formatDate, isWithinDayRange } from '../../../utils/dates'
 
-import { getWeight } from '../../../reducers'
-import { fetchWeight } from '../../../actions/weight'
-import { openModal } from '../../../actions/modal'
-
-import ApiRequest from '../../reusable/api/ApiRequest'
+import { UserContext } from '../../contexts'
+import AddWeightModal from '../../reusable/modals/AddWeightModal'
 import AuthenticatedPage from '../../reusable/pages/AuthenticatedPage'
 import DatePicker from '../../reusable/dates/DatePicker'
 
-const WeightPage = ({ data, fetchWeight, openModal }) => (
-  <AuthenticatedPage>
-    <div className="weight-page page">
-      <ApiRequest apiFn={fetchWeight} onMount={true} />
-      <DatePicker>
-        {selectedDate => {
-          // Filter out weights that don't fall in the date range for the selected date.
-          const dayWeights = data.filter(({ date }) =>
-            isWithinDayRange(date, selectedDate)
-          )
+const WeightPage = () => {
+  const [addWeightModalOpen, setAddWeightModalOpen] = useState(false)
 
-          return (
-            <div className="weights">
-              {_.orderBy(dayWeights, 'createdAt').map(
-                ({ createdAt, date, id, weight }) => {
-                  const dateForWeight = isWithinDayRange(createdAt, date)
-                    ? createdAt
-                    : date
+  return (
+    <AuthenticatedPage>
+      <div className="weight-page page">
+        <UserContext.Consumer>
+          {({ jwt }) => (
+            <ApiRequest apiFn={() => fetchWeight({ jwt })} onMount={true}>
+              {({ data }) => (
+                <DatePicker>
+                  {selectedDate => {
+                    // Filter out weights that don't fall in the date range for the selected date.
+                    const dayWeights = data.filter(({ date }) =>
+                      isWithinDayRange(date, selectedDate)
+                    )
 
-                  return (
-                    <div className="weight" key={id}>
-                      <div>{weight}</div>
-                      <div className="weight-date">
-                        {formatDate(dateForWeight, 'M/DD/YYYY h:mm A')}
+                    return (
+                      <div className="weights">
+                        {_.orderBy(dayWeights, 'createdAt').map(
+                          ({ createdAt, date, id, weight }) => {
+                            const dateForWeight = isWithinDayRange(
+                              createdAt,
+                              date
+                            )
+                              ? createdAt
+                              : date
+
+                            return (
+                              <div className="weight" key={id}>
+                                <div>{weight}</div>
+                                <div className="weight-date">
+                                  {formatDate(
+                                    dateForWeight,
+                                    'M/DD/YYYY h:mm A'
+                                  )}
+                                </div>
+                              </div>
+                            )
+                          }
+                        )}
+                        <a
+                          className="add-weight-link"
+                          onClick={() => setAddWeightModalOpen(true)}
+                        >
+                          + Add Weight
+                        </a>
+
+                        <AddWeightModal
+                          closeModal={() => setAddWeightModalOpen(false)}
+                          date={selectedDate}
+                          isOpen={addWeightModalOpen}
+                        />
                       </div>
-                    </div>
-                  )
-                }
+                    )
+                  }}
+                </DatePicker>
               )}
-              <a
-                className="add-weight-link"
-                onClick={() =>
-                  openModal({
-                    date: selectedDate,
-                    type: MODAL_TYPES.ADD_WEIGHT,
-                  })
-                }
-              >
-                + Add Weight
-              </a>
-            </div>
-          )
-        }}
-      </DatePicker>
-    </div>
-  </AuthenticatedPage>
-)
-
-WeightPage.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      createdAt: PropTypes.string.isRequired,
-      date: PropTypes.number.isRequired,
-      id: PropTypes.string.isRequired,
-      weight: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  fetchWeight: PropTypes.func.isRequired,
-  openModal: PropTypes.func.isRequired,
+            </ApiRequest>
+          )}
+        </UserContext.Consumer>
+      </div>
+    </AuthenticatedPage>
+  )
 }
 
-export default connect(
-  state => ({
-    data: getWeight(state),
-  }),
-  {
-    fetchWeight,
-    openModal,
-  }
-)(WeightPage)
+export default WeightPage

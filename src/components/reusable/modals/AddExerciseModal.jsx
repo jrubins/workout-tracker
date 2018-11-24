@@ -1,16 +1,16 @@
-import React, { Component, Fragment } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import ApiForm from '@jrubins/react-components/lib/forms/ApiForm'
+import Form from '@jrubins/react-components/lib/forms/Form'
+import FormGroup from '@jrubins/react-components/lib/forms/FormGroup'
+import FormSubmit from '@jrubins/react-components/lib/forms/FormSubmit'
 import cn from 'classnames'
 
-import { saveExercise } from '../../../actions/exercises'
+import { createExercise } from '../../../utils/api/exercises'
 
-import ApiForm from '../forms/ApiForm'
+import { UserContext } from '../../contexts'
 import CheckmarkIcon from '../icons/CheckmarkIcon'
 import ExerciseTypeSelect from '../forms/selects/exerciseTypes/ExerciseTypeSelect'
-import Form from '../forms/Form'
-import FormGroup from '../forms/FormGroup'
-import FormSubmit from '../forms/FormSubmit'
 import SaveExerciseTypeForm from '../forms/exerciseTypes/SaveExerciseTypeForm'
 
 const FORM_STATE_FIELDS = {
@@ -19,117 +19,105 @@ const FORM_STATE_FIELDS = {
   },
 }
 
-class AddExerciseModal extends Component {
-  constructor(props) {
-    super(props)
+const AddExerciseModal = ({ completedForm, date }) => {
+  const [newExerciseFieldsVisible, setNewExerciseFieldsVisible] = useState(
+    false
+  )
 
-    this.state = {
-      newExerciseFieldsVisible: false,
-    }
-  }
-
-  render() {
-    const { completedForm, date, saveExercise } = this.props
-    const { newExerciseFieldsVisible } = this.state
-
-    return (
-      <ApiForm
-        apiFn={async formData =>
-          saveExercise({
-            ...formData,
-            date,
-          })
-        }
-        completedForm={completedForm}
-      >
-        {({ isSaving, saveFormRef, submitToApi }) => (
-          <Form ref={saveFormRef} formFields={FORM_STATE_FIELDS}>
-            {({ fields, handleChange }) => (
-              <div className="add-exercise-form">
-                <div className="add-exercise-form-tabs">
-                  <a
-                    className={cn('add-exercise-form-tab', {
-                      'add-exercise-form-tab-active': !newExerciseFieldsVisible,
-                    })}
-                    onClick={() => {
-                      this.setState({
-                        newExerciseFieldsVisible: false,
-                      })
-                    }}
-                  >
-                    Existing
-                  </a>
-                  <a
-                    className={cn('add-exercise-form-tab', {
-                      'add-exercise-form-tab-active': newExerciseFieldsVisible,
-                    })}
-                    onClick={() => {
-                      this.setState({
-                        newExerciseFieldsVisible: true,
-                      })
-                    }}
-                  >
-                    New
-                  </a>
-                </div>
-                {!newExerciseFieldsVisible && (
-                  <Fragment>
-                    <FormGroup label="Exercise">
-                      <ExerciseTypeSelect
-                        handleChange={value =>
-                          handleChange(
-                            FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName,
-                            value
-                          )
-                        }
-                        name="exerciseType"
-                        value={
-                          fields[FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName]
-                            .value
-                        }
-                      />
-                    </FormGroup>
-
-                    <FormSubmit
-                      handleSubmit={submitToApi}
-                      hasInlineLoader={false}
-                      isLoading={isSaving}
+  return (
+    <UserContext.Consumer>
+      {({ jwt }) => (
+        <ApiForm
+          apiFn={async data =>
+            createExercise({
+              data,
+              date,
+              jwt,
+            })
+          }
+          completedForm={completedForm}
+        >
+          {({ isSaving, saveFormRef, submitToApi }) => (
+            <Form ref={saveFormRef} formFields={FORM_STATE_FIELDS}>
+              {({ fields, handleChange }) => (
+                <div className="add-exercise-form">
+                  <div className="add-exercise-form-tabs">
+                    <a
+                      className={cn('add-exercise-form-tab', {
+                        'add-exercise-form-tab-active': !newExerciseFieldsVisible,
+                      })}
+                      onClick={() => {
+                        setNewExerciseFieldsVisible(false)
+                      }}
                     >
-                      {!isSaving && <CheckmarkIcon />}
-                    </FormSubmit>
-                  </Fragment>
-                )}
+                      Existing
+                    </a>
+                    <a
+                      className={cn('add-exercise-form-tab', {
+                        'add-exercise-form-tab-active': newExerciseFieldsVisible,
+                      })}
+                      onClick={() => {
+                        setNewExerciseFieldsVisible(true)
+                      }}
+                    >
+                      New
+                    </a>
+                  </div>
+                  {!newExerciseFieldsVisible && (
+                    <>
+                      <FormGroup label="Exercise">
+                        <ExerciseTypeSelect
+                          handleChange={value =>
+                            handleChange(
+                              FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName,
+                              value
+                            )
+                          }
+                          name="exerciseType"
+                          value={
+                            fields[FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName]
+                              .value
+                          }
+                        />
+                      </FormGroup>
 
-                {newExerciseFieldsVisible && (
-                  <SaveExerciseTypeForm
-                    completedForm={data => {
-                      handleChange(
-                        FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName,
-                        data.id
-                      )
+                      <FormSubmit
+                        handleSubmit={submitToApi}
+                        hasInlineLoader={false}
+                        isLoading={isSaving}
+                      >
+                        {!isSaving && <CheckmarkIcon />}
+                      </FormSubmit>
+                    </>
+                  )}
 
-                      return submitToApi()
-                    }}
-                    isLoading={isSaving}
-                    isNested={true}
-                  />
-                )}
-              </div>
-            )}
-          </Form>
-        )}
-      </ApiForm>
-    )
-  }
+                  {newExerciseFieldsVisible && (
+                    <SaveExerciseTypeForm
+                      completedForm={data => {
+                        handleChange(
+                          FORM_STATE_FIELDS.EXERCISE_TYPE.fieldName,
+                          data.id
+                        )
+
+                        return submitToApi()
+                      }}
+                      isLoading={isSaving}
+                      isNested={true}
+                    />
+                  )}
+                </div>
+              )}
+            </Form>
+          )}
+        </ApiForm>
+      )}
+    </UserContext.Consumer>
+  )
 }
 
 AddExerciseModal.propTypes = {
-  saveExercise: PropTypes.func.isRequired,
-
   completedForm: PropTypes.func.isRequired,
   date: PropTypes.number.isRequired,
 }
 
-export default connect(null, {
-  saveExercise,
-})(AddExerciseModal)
+export default AddExerciseModal

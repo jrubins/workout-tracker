@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import ApiForm from '@jrubins/react-components/lib/forms/ApiForm'
+import Form from '@jrubins/react-components/lib/forms/Form'
+import FormGroup from '@jrubins/react-components/lib/forms/FormGroup'
+import FormSubmit from '@jrubins/react-components/lib/forms/FormSubmit'
+import Input from '@jrubins/react-components/lib/forms/fields/Input'
 
-import { saveWeight } from '../../../actions/weight'
+import { createWeight } from '../../../utils/api/weight'
 
-import ApiForm from '../forms/ApiForm'
+import { UserContext } from '../../contexts'
 import CheckmarkIcon from '../icons/CheckmarkIcon'
-import Form from '../forms/Form'
-import FormGroup from '../forms/FormGroup'
-import FormSubmit from '../forms/FormSubmit'
-import Input from '../forms/fields/Input'
 
 const FORM_STATE_FIELDS = {
   WEIGHT: {
@@ -17,53 +17,54 @@ const FORM_STATE_FIELDS = {
   },
 }
 
-const AddWeightModal = ({ completedForm, date, saveWeight }) => (
-  <ApiForm
-    apiFn={formData =>
-      saveWeight({
-        ...formData,
-        date,
-      })
-    }
-    completedForm={completedForm}
-  >
-    {({ isSaving, saveFormRef, submitToApi }) => (
-      <Form ref={saveFormRef} formFields={FORM_STATE_FIELDS}>
-        {({ fields, handleChange }) => (
-          <div className="add-weight-form">
-            <FormGroup label="Weight">
-              <Input
-                autoFocus={true}
-                handleChange={value =>
-                  handleChange(FORM_STATE_FIELDS.WEIGHT.fieldName, value)
-                }
-                name="weight"
-                type="number"
-                value={fields[FORM_STATE_FIELDS.WEIGHT.fieldName].value}
-              />
-            </FormGroup>
+const AddWeightModal = ({ completedForm, date }) => (
+  <UserContext.Consumer>
+    {({ jwt }) => (
+      <ApiForm
+        apiFn={formData =>
+          createWeight({
+            data: formData,
+            date,
+            jwt,
+          })
+        }
+        completedForm={completedForm}
+      >
+        {({ isSaving, saveFormRef, submitToApi }) => (
+          <Form ref={saveFormRef} formFields={FORM_STATE_FIELDS}>
+            {({ fields, handleChange }) => (
+              <div className="add-weight-form">
+                <FormGroup label="Weight">
+                  <Input
+                    autoFocus={true}
+                    handleChange={value =>
+                      handleChange(FORM_STATE_FIELDS.WEIGHT.fieldName, value)
+                    }
+                    name="weight"
+                    type="number"
+                    value={fields[FORM_STATE_FIELDS.WEIGHT.fieldName].value}
+                  />
+                </FormGroup>
 
-            <FormSubmit
-              handleSubmit={submitToApi}
-              hasInlineLoader={false}
-              isLoading={isSaving}
-            >
-              {!isSaving && <CheckmarkIcon />}
-            </FormSubmit>
-          </div>
+                <FormSubmit
+                  handleSubmit={submitToApi}
+                  hasInlineLoader={false}
+                  isLoading={isSaving}
+                >
+                  {!isSaving && <CheckmarkIcon />}
+                </FormSubmit>
+              </div>
+            )}
+          </Form>
         )}
-      </Form>
+      </ApiForm>
     )}
-  </ApiForm>
+  </UserContext.Consumer>
 )
 
 AddWeightModal.propTypes = {
-  saveWeight: PropTypes.func.isRequired,
-
   completedForm: PropTypes.func.isRequired,
   date: PropTypes.number.isRequired,
 }
 
-export default connect(null, {
-  saveWeight,
-})(AddWeightModal)
+export default AddWeightModal

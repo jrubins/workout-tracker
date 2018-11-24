@@ -1,15 +1,16 @@
-import React, { Fragment } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-
-import { MODAL_TYPES } from '../../../utils/modals'
-
-import { openModal } from '../../../actions/modal'
 
 import PencilIcon from '../../reusable/icons/PencilIcon'
+import SaveExerciseTypeModal from '../../reusable/modals/SaveExerciseTypeModal'
+import SaveSetModal from '../../reusable/modals/SaveSetModal'
 import TimeMetricDisplay from './TimeMetricDisplay'
 
-const Exercise = ({ exerciseType, id, openModal, sets }) => {
+const Exercise = ({ exerciseType, id, sets }) => {
+  const [saveExerciseTypeModalOpen, setSaveExerciseTypeModalOpen] = useState(
+    false
+  )
+  const [saveSetModalOpen, setSaveSetModalOpen] = useState(false)
   const { category, description, muscleGroups, name, variation } = exerciseType
   const isDistanceExercise = category === 'Distance'
   const isRepsExercise = category === 'Reps'
@@ -21,13 +22,11 @@ const Exercise = ({ exerciseType, id, openModal, sets }) => {
       <div className="exercise-header">
         <div className="exercise-name">
           {name}{' '}
-          <PencilIcon
-            onClick={() =>
-              openModal({
-                exerciseType,
-                type: MODAL_TYPES.SAVE_EXERCISE_TYPE,
-              })
-            }
+          <PencilIcon onClick={() => setSaveExerciseTypeModalOpen(true)} />
+          <SaveExerciseTypeModal
+            closeModal={() => setSaveExerciseTypeModalOpen(false)}
+            exerciseType={exerciseType}
+            isOpen={saveExerciseTypeModalOpen}
           />
         </div>
         <div className="exercise-variation">{variation}</div>
@@ -60,18 +59,18 @@ const Exercise = ({ exerciseType, id, openModal, sets }) => {
               <div
                 key={i}
                 className="exercise-set"
-                onClick={() =>
-                  openModal({
-                    exerciseId: id,
-                    setId,
-                    type: MODAL_TYPES.SAVE_SET,
-                  })
-                }
+                onClick={() => setSaveSetModalOpen(true)}
               >
+                <SaveSetModal
+                  closeModal={() => setSaveSetModalOpen(false)}
+                  exerciseId={id}
+                  isOpen={saveSetModalOpen}
+                  setId={setId}
+                />
                 <div className="exercise-set-number">{i + 1}</div>
                 <div className="exercise-set-details">
                   {(isDistanceExercise || isTimeExercise) && (
-                    <Fragment>
+                    <>
                       {isDistanceExercise && (
                         <div className="exercise-metric">
                           {distance} {distanceUnit}
@@ -80,33 +79,29 @@ const Exercise = ({ exerciseType, id, openModal, sets }) => {
                       <div className="exercise-metric">
                         <TimeMetricDisplay time={time} timeUnit={timeUnit} />
                       </div>
-                    </Fragment>
+                    </>
                   )}
                   {(isRepsExercise || isWeightExercise) && (
-                    <Fragment>
+                    <>
                       {isWeightExercise && (
                         <div className="exercise-metric">
                           {weight} {weightUnit}
                         </div>
                       )}
                       <div className="exercise-metric">{reps} reps</div>
-                    </Fragment>
+                    </>
                   )}
                 </div>
               </div>
             )
           )}
           <div className="exercise-add-set">
-            <a
-              onClick={() =>
-                openModal({
-                  exerciseId: id,
-                  type: MODAL_TYPES.SAVE_SET,
-                })
-              }
-            >
-              + Add Set
-            </a>
+            <a onClick={() => setSaveSetModalOpen(true)}>+ Add Set</a>
+            <SaveSetModal
+              closeModal={() => setSaveSetModalOpen(false)}
+              exerciseId={id}
+              isOpen={saveSetModalOpen}
+            />
           </div>
         </div>
       </div>
@@ -115,8 +110,6 @@ const Exercise = ({ exerciseType, id, openModal, sets }) => {
 }
 
 Exercise.propTypes = {
-  openModal: PropTypes.func.isRequired,
-
   exerciseType: PropTypes.shape({
     category: PropTypes.string.isRequired,
     description: PropTypes.string,
@@ -138,6 +131,4 @@ Exercise.propTypes = {
   ).isRequired,
 }
 
-export default connect(null, {
-  openModal,
-})(Exercise)
+export default Exercise
