@@ -98,10 +98,12 @@ button {
 
 // This removes the shadowing that iOS Safari puts on inputs.
 input[type='text'], // sass-lint:disable-line no-qualifying-elements
-input[type='password'] { // sass-lint:disable-line no-qualifying-elements
+input[type='password'] {
+  // sass-lint:disable-line no-qualifying-elements
   appearance: none;
 }
 
-input[type='password'] { // sass-lint:disable-line no-qualifying-elements
+input[type='password'] {
+  // sass-lint:disable-line no-qualifying-elements
   font-family: sans-serif;
 }

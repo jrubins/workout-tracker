@@ -7,6 +7,7 @@ const buildConfig = require('./buildConfig')
 module.exports = {
   context: __dirname,
   devServer: {
+    clientLogLevel: 'warning',
     historyApiFallback: true,
     hot: true,
     port: buildConfig.serverPort,
