@@ -36,6 +36,7 @@ class Input extends Component {
       autoComplete,
       autoFocus,
       disabled,
+      forwardedRef,
       handleBlur,
       handleChange,
       handleClick,
@@ -44,7 +45,6 @@ class Input extends Component {
       maxLength,
       name,
       placeholder,
-      setInputRef,
       tabindex,
       type,
       uncontrolled,
@@ -60,7 +60,7 @@ class Input extends Component {
     return (
       <input
         {...controlledProps}
-        ref={setInputRef}
+        ref={forwardedRef}
         autoComplete={autoComplete}
         autoFocus={autoFocus}
         className={cn('input', {
@@ -86,6 +86,7 @@ Input.propTypes = {
   autoComplete: PropTypes.string,
   autoFocus: PropTypes.bool,
   disabled: PropTypes.bool,
+  forwardedRef: PropTypes.node,
   handleBlur: PropTypes.func,
   handleChange: PropTypes.func,
   handleClick: PropTypes.func,
@@ -94,7 +95,6 @@ Input.propTypes = {
   maxLength: PropTypes.number,
   name: PropTypes.string,
   placeholder: PropTypes.string,
-  setInputRef: PropTypes.func,
   tabindex: PropTypes.string,
   type: PropTypes.string.isRequired,
   uncontrolled: PropTypes.bool,
@@ -105,4 +105,6 @@ Input.propTypes = {
   ]),
 }
 
-export default Input
+export default React.forwardRef((props, ref) => (
+  <Input {...props} forwardedRef={ref} />
+))

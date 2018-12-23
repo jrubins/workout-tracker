@@ -85,11 +85,11 @@ class SelectInput extends Component {
       children,
       disabled,
       filterText,
+      forwardedRef,
       handleBlur,
       handleChange,
       handleFocus,
       placeholder,
-      setSelectInputRef,
     } = this.props
     const { focusedOptionIndex, isOpen } = this.state
 
@@ -108,6 +108,7 @@ class SelectInput extends Component {
         onKeyDown={this.handleKeyDown}
       >
         <Input
+          ref={forwardedRef}
           disabled={disabled}
           handleChange={handleChange}
           handleFocus={() => {
@@ -120,11 +121,6 @@ class SelectInput extends Component {
             }
           }}
           placeholder={placeholder}
-          setInputRef={ref => {
-            this.selectInput = ref
-
-            setSelectInputRef(ref)
-          }}
           type="text"
           value={filterText}
         />
@@ -143,6 +139,7 @@ SelectInput.propTypes = {
   children: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   filterText: PropTypes.string,
+  forwardedRef: PropTypes.any,
   handleBlur: PropTypes.func,
   handleChange: PropTypes.func.isRequired,
   handleEnter: PropTypes.func.isRequired,
@@ -150,7 +147,8 @@ SelectInput.propTypes = {
   initialFocusedOptionIndex: PropTypes.number,
   numOptions: PropTypes.number.isRequired,
   placeholder: PropTypes.string,
-  setSelectInputRef: PropTypes.func,
 }
 
-export default SelectInput
+export default React.forwardRef((props, ref) => (
+  <SelectInput {...props} forwardedRef={ref} />
+))

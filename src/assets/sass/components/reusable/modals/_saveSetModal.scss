@@ -34,25 +34,6 @@
     font-size: 20px;
     font-weight: bold;
   }
-
-  .form-submit {
-    margin-top: 40px;
-
-    .button {
-      position: relative;
-
-      width: 40px;
-      height: 40px;
-      padding: 0;
-      border: 1px solid $alto;
-      border-radius: 50%;
-    }
-
-    .icon-checkmark {
-      width: 20px;
-      height: 20px;
-    }
-  }
 }
 
 .save-set-form-group {
@@ -60,4 +41,44 @@
   position: relative;
   align-items: flex-end;
   justify-content: center;
+}
+
+.save-set-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 40px;
+
+  .button {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid $alto;
+    border-radius: 50%;
+  }
+
+  .circle-snake-loader {
+    margin: 0;
+  }
+
+  .icon-checkmark,
+  .icon-trash {
+    width: 20px;
+    height: 20px;
+  }
+
+  .icon-trash {
+    fill: $faded-red;
+  }
+}
+
+.save-set-actions-delete {
+  margin-right: 15px;
+
+  .circle-snake-loader {
+    border-color: $faded-red;
+    border-bottom-color: transparent;
+  }
 }

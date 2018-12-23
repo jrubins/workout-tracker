@@ -45,6 +45,7 @@ const ExerciseTypeSelect = ({ handleChange, value }) => {
 
             return (
               <SelectInput
+                ref={selectInput}
                 filterText={
                   filterText ||
                   (value
@@ -68,7 +69,6 @@ const ExerciseTypeSelect = ({ handleChange, value }) => {
                     : 0
                 }
                 numOptions={filteredExerciseTypes.length}
-                setSelectInputRef={selectInput}
               >
                 {({ focusedOptionIndex, isOpen }) => (
                   <SelectInputMenu isOpen={isOpen}>

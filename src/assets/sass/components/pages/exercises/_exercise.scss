@@ -46,9 +46,13 @@
   font-size: 13px;
 }
 
-.exercise-duration {
-  margin-left: 10px;
-  font-size: 14px;
+.exercise-delete-set {
+  display: block;
+
+  padding: 5px 0;
+  color: $faded-red;
+
+  text-decoration: underline;
 }
 
 .exercise-sets {

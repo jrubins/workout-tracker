@@ -1,0 +1,24 @@
+.delete-exercise-modal {
+  font-size: 16px;
+
+  p {
+    text-align: center;
+  }
+}
+
+.delete-exercise-modal-submit {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 40px;
+
+  .button {
+    border-color: $faded-red;
+    color: $faded-red;
+
+    .circle-snake-loader {
+      border-color: $faded-red;
+      border-bottom-color: transparent;
+    }
+  }
+}

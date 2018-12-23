@@ -1,55 +1,21 @@
-.analyze-page {
-  h4 {
-    margin: 0 0 20px;
-    color: $silver-chalice;
+.analyze-days-per-week,
+.analyze-weight {
+  color: $curious-blue;
 
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-
-  .form-label a {
-    font-size: 12px;
-  }
+  font-size: 80px;
+  font-weight: bold;
+  text-align: center;
 }
 
-.analyze-chart {
-  width: 100%;
-  height: 400px;
-  margin-top: 30px;
-}
-
-.tooltip-container {
-  padding: 10px;
-  border: 1px solid $alto;
-  border-radius: 4px;
-  background-color: $white;
-}
-
-.tooltip-label {
-  margin-bottom: 5px;
-}
-
-.recent-data-points {
-  margin-top: 60px;
-}
-
-.recent-data-points-header,
-.recent-data-point {
-  display: flex;
-
-  padding: 10px;
-
-  > div {
-    width: 50%;
-  }
-}
-
-.recent-data-points-header {
+.analyze-days-per-week {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
   border-bottom: 1px solid $alto;
+}
+
+.analyze-days-per-week-label,
+.analyze-weight-label {
   color: $silver-chalice;
 
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
+  font-size: 20px;
 }

@@ -45,7 +45,7 @@ const SaveExerciseTypeForm = ({
     {({ jwt }) => (
       <ApiForm
         apiFn={formData =>
-          initialData.id
+          initialData
             ? editExerciseType({ data: formData, jwt })
             : createExerciseType({ data: formData, jwt })
         }

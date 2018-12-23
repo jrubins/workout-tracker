@@ -1,4 +1,4 @@
-import { get, patch, post } from '@jrubins/utils/lib/requests'
+import { apiDelete, get, patch, post } from '@jrubins/utils/lib/requests'
 import _ from 'lodash'
 
 /**
@@ -40,6 +40,35 @@ export function createExerciseSet({ data, exerciseId, jwt }) {
 }
 
 /**
+ * Deletes an exercise.
+ *
+ * @param {Object} opts
+ * @param {String} opts.id
+ * @param {String} opts.jwt
+ * @returns {Promise}
+ */
+export function deleteExercise({ id, jwt }) {
+  return apiDelete(`${EXERCISES_API_ENDPOINT}/${id}`, {
+    authToken: jwt,
+  })
+}
+
+/**
+ * Deletes a set for an exercise.
+ *
+ * @param {Object} opts
+ * @param {Number} opts.exerciseId
+ * @param {String} opts.jwt
+ * @param {Number} opts.setId
+ * @returns {Promise}
+ */
+export function deleteExerciseSet({ exerciseId, jwt, setId }) {
+  return apiDelete(`${EXERCISES_API_ENDPOINT}/${exerciseId}/sets/${setId}`, {
+    authToken: jwt,
+  })
+}
+
+/**
  * Edits an existing set for an exercise.
  *
  * @param {Object} opts
@@ -57,14 +86,18 @@ export function editExerciseSet({ data, exerciseId, jwt }) {
 }
 
 /**
- * Fetches all exercises.
+ * Fetches all exercises. Provide a date to filter exercises by date.
  *
  * @param {Object} opts
+ * @param {Number} opts.date
  * @param {String} opts.jwt
  * @returns {Promise}
  */
-export function fetchExercises({ jwt }) {
+export function fetchExercises({ date, jwt }) {
   return get(EXERCISES_API_ENDPOINT, {
     authToken: jwt,
+    query: {
+      date,
+    },
   })
 }

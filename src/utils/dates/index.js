@@ -63,6 +63,15 @@ export function formatDate(
 }
 
 /**
+ * Returns the timestamp for the start of the current date.
+ *
+ * @returns {Number}
+ */
+export function getStartOfToday() {
+  return getTimestamp(startOfDay(Date.now()))
+}
+
+/**
  * Returns the number of milliseconds from the Epoch for the given date.
  *
  * @param {Date|String|Number} date
