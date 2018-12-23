@@ -24,7 +24,12 @@ module.exports = {
         include: [buildConfig.paths.src.base],
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader?importLoaders=1',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            },
+          },
           'postcss-loader',
           'sass-loader',
         ],
